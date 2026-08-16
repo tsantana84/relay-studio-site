@@ -48,6 +48,6 @@ deploy.
 
 ## Publicação
 
-O site está preparado para GitHub Pages, mas ainda não foi enviado a um repositório nem
-publicado. O formulário de interesse é um recurso externo publicado separadamente no
-Google Forms.
+O site está publicado em
+https://tsantana84.github.io/relay-studio-site/. O formulário de interesse é um recurso
+externo publicado separadamente no Google Forms.
