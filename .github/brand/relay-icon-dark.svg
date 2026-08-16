@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="title desc">
+  <title id="title">Relay Studio Icon - Dark</title>
+  <desc id="desc">Relay Studio R monogram in amber on a deep navy square background, rebuilt from the original icon proportions.</desc>
+  <rect width="1024" height="1024" fill="#0D1520"/>
+  <g fill="#E59820">
+    <path fill-rule="evenodd" d="M252 231H772V778H252V231ZM286 266V745H737V266H286Z"/>
+    <path fill-rule="evenodd" d="M370 332H532C591 332 631 372 631 430C631 489 591 530 532 530H536L737 745H666L466 530H418V678H370V332ZM418 375V488H526C562 488 583 466 583 431C583 397 562 375 526 375H418Z"/>
+  </g>
+</svg>
