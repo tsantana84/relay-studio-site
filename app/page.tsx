@@ -2,53 +2,53 @@ const workExamples = [
   {
     number: "01",
     title: "Relatórios que precisam fechar",
-    description: "Reunir dados dispersos, conferir o que mudou e entregar uma leitura pronta para decisão.",
+    description: "Reunir dados dispersos, conferir o que mudou e devolver uma leitura pronta para decisão.",
   },
   {
     number: "02",
     title: "Reconciliações e conferências",
-    description: "Encontrar divergências antes que elas virem retrabalho, atraso ou uma decisão errada.",
+    description: "Comparar fontes, separar o que bate do que não bate e entregar as exceções para revisão.",
   },
   {
     number: "03",
     title: "Documentos e propostas",
-    description: "Transformar contexto espalhado em um primeiro documento que alguém consegue revisar.",
+    description: "Reunir o contexto, preparar uma primeira versão e encaminhar o que precisa de revisão.",
   },
   {
     number: "04",
     title: "Prazos e acompanhamentos",
-    description: "Tirar o próximo passo da memória de alguém e dar visibilidade ao que está pendente.",
+    description: "Identificar o que está pendente, organizar o próximo passo e registrar o que foi feito.",
   },
 ];
 
 const capabilities = [
   {
     number: "01",
-    name: "Contexto",
-    description: "Reunir dados autorizados e evidências antes de pedir uma decisão.",
+    name: "Execução",
+    description: "Ler fontes autorizadas, aplicar as regras do processo e produzir o resultado combinado.",
   },
   {
     number: "02",
-    name: "Preparação",
-    description: "Transformar informação dispersa em um entregável ou próximo passo revisável.",
+    name: "Aprovação",
+    description: "Encaminhar exceções e aprovações a quem responde pelo processo.",
   },
   {
     number: "03",
-    name: "Confiança",
-    description: "Deixar exceções à vista. Pedir aprovação quando a decisão exigir alguém. Registrar o que aconteceu.",
+    name: "Evidência",
+    description: "Registrar entradas, decisões e resultado para que cada entrega possa ser conferida.",
   },
 ];
 
 const processSteps = [
   {
     number: "01",
-    title: "Fonte autorizada",
-    description: "O trabalho começa nos dados e sistemas que a operação escolheu usar.",
+    title: "Fontes autorizadas",
+    description: "A operação define as fontes, permissões e regras que o fluxo pode usar.",
   },
   {
     number: "02",
-    title: "Trabalho preparado",
-    description: "O sistema organiza o contexto, aplica regras e monta uma primeira versão.",
+    title: "Trabalho executado",
+    description: "A Relay reúne contexto, aplica o processo e monta o resultado recorrente.",
   },
   {
     number: "03",
@@ -57,8 +57,8 @@ const processSteps = [
   },
   {
     number: "04",
-    title: "Ação registrada",
-    description: "A decisão e o resultado ficam registrados para consulta e para o próximo ciclo.",
+    title: "Resultado registrado",
+    description: "A entrega, a decisão e a evidência ficam registradas para consulta e para o próximo ciclo.",
   },
 ];
 
@@ -101,6 +101,7 @@ export default function HomePage() {
           <nav className="site-nav" aria-label="Navegação principal">
             <a href="#visao">Visão</a>
             <a href="#trabalho">O trabalho</a>
+            <a href="#produto">A entrega</a>
             <a href="#processo">Como funciona</a>
             <a href="#privacidade">Privacidade</a>
           </nav>
@@ -108,71 +109,110 @@ export default function HomePage() {
 
         <div className="hero__content" id="top">
           <div className="hero__copy reveal reveal--one">
-            <p className="eyebrow">Relay Studio / sistemas para operações</p>
-            <h1 id="hero-title">Mais tempo trabalhando na coisa certa.</h1>
+            <p className="eyebrow">Relay Studio / SaaS de execução operacional</p>
+            <h1 id="hero-title">Seu time decide. A Relay executa o trabalho recorrente.</h1>
             <p className="hero__lede">
-              Construímos sistemas para operações que perdem tempo reunindo informação, conferindo
-              dados e perseguindo o próximo passo.
+              A Relay Studio é um SaaS que transforma dados autorizados e regras da sua operação
+              em trabalho concluído, verificável e pronto para a próxima decisão.
             </p>
             <p className="hero__thesis">
-              Contexto organizado. Trabalho preparado. Exceções visíveis.
+              Execução recorrente. Exceções sob controle. Trabalho na coisa certa.
             </p>
             <div className="hero__actions">
               <a className="button button--amber" href="#visao">
-                Entender a visão
+                Ver como entregamos
                 <span aria-hidden="true">↓</span>
               </a>
               <a className="text-link text-link--light" href="#trabalho">
-                Ver o trabalho <span aria-hidden="true">↓</span>
+                Encontrar um fluxo <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
 
-          <div className="signal-rail reveal reveal--two" aria-label="Da informação à confiança">
+          <div className="signal-rail reveal reveal--two" aria-label="Da fonte autorizada ao resultado">
             <div className="signal-rail__line" aria-hidden="true" />
             <div className="signal-rail__item">
               <span className="signal-rail__marker">01</span>
-              <span>Contexto</span>
+              <span>Fonte</span>
             </div>
             <div className="signal-rail__item">
               <span className="signal-rail__marker">02</span>
-              <span>Trabalho</span>
+              <span>Execução</span>
             </div>
             <div className="signal-rail__item">
               <span className="signal-rail__marker signal-rail__marker--active">03</span>
-              <span>Confiança</span>
+              <span>Resultado</span>
             </div>
           </div>
         </div>
 
         <div className="hero__footer">
-          <p>O próximo passo merece mais do que uma informação perdida.</p>
+          <p>O trabalho recorrente não precisa parar na sua equipe.</p>
           <span aria-hidden="true">↓</span>
+        </div>
+      </section>
+
+      <section className="execution-example" id="fluxo-exemplo" aria-labelledby="execution-example-title">
+        <div className="execution-example__inner">
+          <div className="execution-example__index">Exemplo de fluxo / em validação</div>
+          <div className="execution-example__body">
+            <div className="execution-example__intro">
+              <h2 id="execution-example-title">Uma reconciliação não precisa terminar na sua equipe.</h2>
+              <p>
+                A Relay recebe dados autorizados, compara fontes, identifica divergências e devolve
+                uma reconciliação com fila de exceções para aprovação.
+              </p>
+            </div>
+            <ol className="execution-example__steps">
+              <li className="execution-example__step">
+                <span className="execution-example__number">01</span>
+                <div>
+                  <h3>Fontes</h3>
+                  <p>Planilhas, documentos ou sistemas que a operação autorizou.</p>
+                </div>
+              </li>
+              <li className="execution-example__step">
+                <span className="execution-example__number">02</span>
+                <div>
+                  <h3>Conferência</h3>
+                  <p>Comparação, regras e classificação do que bate ou precisa de revisão.</p>
+                </div>
+              </li>
+              <li className="execution-example__step">
+                <span className="execution-example__number">03</span>
+                <div>
+                  <h3>Entrega</h3>
+                  <p>Resultado recorrente com evidências e exceções para a pessoa certa.</p>
+                </div>
+              </li>
+            </ol>
+            <p className="execution-example__note">
+              Fluxo candidato. Frequência, SLA, critério de aceite e cobrança ainda estão em validação.
+            </p>
+          </div>
         </div>
       </section>
 
       <section className="section section--paper vision" id="visao" aria-labelledby="vision-title">
         <div className="section__index">01 / Visão</div>
         <div className="vision__body">
-          <p className="eyebrow eyebrow--ink">Onde o trabalho emperra</p>
-          <h2 id="vision-title">
-            Quando a informação demora mais que a decisão, o trabalho perde ritmo.
-          </h2>
+          <p className="eyebrow eyebrow--ink">A entrega</p>
+          <h2 id="vision-title">Software que informa é útil. Software que executa muda o ritmo da operação.</h2>
           <div className="vision__detail">
             <p>
-              Em muitas operações, as pessoas passam boa parte do dia movendo informação entre
-              ferramentas, conferindo o que já deveria estar claro e cobrando o próximo passo. A
-              decisão chega tarde, uma exceção passa batida e o trabalho que importa fica para
-              depois.
+              Em muitas operações, o software reúne dados, mas a equipe ainda precisa buscar,
+              conferir, copiar, cobrar e fechar o trabalho. O custo não está apenas na informação
+              espalhada. Está no tempo entre saber o que fazer e ver o resultado pronto.
             </p>
             <p>
-              A Relay Studio ajuda a separar o trabalho repetível das decisões que pedem
-              julgamento. O sistema organiza o contexto, prepara o próximo passo e deixa as
-              exceções à vista. A responsabilidade continua com as pessoas.
+              A Relay ocupa essa camada de execução. Recebe dados de fontes autorizadas, segue as
+              regras do processo, produz o resultado e chama uma pessoa quando há uma exceção ou
+              decisão que exige responsabilidade. Não é mais uma tela para administrar: você assina
+              a execução de um fluxo recorrente.
             </p>
           </div>
           <p className="statement">
-            Menos tempo procurando, conferindo e repassando informação. Mais tempo trabalhando na
+            Menos tempo operando ferramentas. Mais resultado entregue e mais tempo trabalhando na
             coisa certa.
           </p>
         </div>
@@ -182,11 +222,12 @@ export default function HomePage() {
         <div className="section__index">02 / O trabalho</div>
         <div className="work__body">
           <div className="work__intro">
-            <p className="eyebrow eyebrow--ink">O que estamos testando</p>
-            <h2 id="work-title">Começamos pelo trabalho que não deveria depender de alguém perseguindo informação.</h2>
+            <p className="eyebrow eyebrow--ink">Onde começamos</p>
+            <h2 id="work-title">Começamos por fluxos recorrentes em que o resultado é claro e o trabalho manual é alto.</h2>
             <p>
-              Relatórios, reconciliações, documentos, prazos e acompanhamentos pedem contexto, repetem
-              padrões e precisam terminar em um resultado que alguém consiga conferir.
+              A Relay não começa tentando automatizar a empresa inteira. Começa por um trabalho
+              delimitado, com fontes conhecidas, regras claras e uma definição de pronto que alguém
+              consegue conferir.
             </p>
           </div>
           <div className="work-list">
@@ -201,21 +242,22 @@ export default function HomePage() {
             ))}
           </div>
           <p className="section-note">
-            Estamos investigando esses tipos de trabalho. Eles ainda não são promessas prontas
-            para qualquer empresa.
+            Esses fluxos estão em validação comercial. A lista indica onde estamos procurando um
+            primeiro resultado repetível; não é um catálogo pronto para qualquer empresa.
           </p>
         </div>
       </section>
 
       <section className="section section--navy build" id="produto" aria-labelledby="build-title">
-        <div className="section__index section__index--light">03 / O que construímos</div>
+        <div className="section__index section__index--light">03 / A entrega</div>
         <div className="build__body">
           <div className="build__intro">
-            <p className="eyebrow">O que muda na operação</p>
-            <h2 id="build-title">Conectamos contexto, preparação, aprovação e registro.</h2>
+            <p className="eyebrow">O que você recebe</p>
+            <h2 id="build-title">Você define o resultado. A Relay cuida da execução.</h2>
             <p>
-              A ideia é preparar o próximo passo, deixá-lo verificável e fazer a operação avançar
-              com clareza.
+              O SaaS transforma um processo recorrente em um fluxo operado com contexto, regras,
+              aprovação e registro. A equipe não precisa administrar mais uma automação para obter
+              o resultado.
             </p>
           </div>
           <div className="capability-list">
@@ -239,11 +281,11 @@ export default function HomePage() {
         <div className="section__index">04 / Como funciona</div>
         <div className="process__body">
           <div className="process__intro">
-            <p className="eyebrow eyebrow--ink">O mecanismo de confiança</p>
-            <h2 id="process-title">O trabalho chega preparado para a próxima decisão.</h2>
+            <p className="eyebrow eyebrow--ink">O mecanismo de entrega</p>
+            <h2 id="process-title">Cada fluxo termina em trabalho concluído, não apenas em uma sugestão.</h2>
             <p>
-              O sistema cuida do que se repete. A pessoa entra quando há uma exceção ou decisão.
-              Cada passagem fica registrada.
+              A Relay executa o que é repetível, leva as exceções para julgamento humano e deixa
+              uma evidência do que aconteceu.
             </p>
           </div>
           <ol className="process-list">
@@ -270,10 +312,10 @@ export default function HomePage() {
         <div className="principles__body">
           <div className="principles__intro">
             <p className="eyebrow eyebrow--ink">Como construímos</p>
-            <h2 id="principles-title">A precisão começa com limites claros.</h2>
+            <h2 id="principles-title">Execução só escala quando pode ser conferida.</h2>
             <p>
-              Uma operação confiável precisa de limites claros, evidência suficiente e espaço para
-              as pessoas decidirem quando a situação pede.
+              Um resultado operacional precisa ter fonte, limite, responsável e uma forma clara de
+              verificar se ficou pronto.
             </p>
           </div>
           <div className="principles__grid">
@@ -293,11 +335,12 @@ export default function HomePage() {
         <div className="privacy__body">
           <div className="privacy__intro">
             <p className="eyebrow">LGPD / responsabilidade operacional</p>
-            <h2 id="privacy-title">Confiança também é saber o que acontece com os dados.</h2>
+            <h2 id="privacy-title">Executar trabalho também exige responsabilidade sobre os dados.</h2>
           </div>
           <div className="privacy__detail">
             <p className="privacy__statement">
-              O Relay foi construído para operar sob a LGPD. O sistema inclui direitos de acesso,
+              Como SaaS de execução operacional, a Relay trata dados dentro da finalidade,
+              permissões e regras definidas para cada fluxo. A base inclui direitos de acesso,
               exportação e eliminação, retenção por tenant, mascaramento e trilha de auditoria.
             </p>
             <p>
@@ -320,25 +363,28 @@ export default function HomePage() {
       </section>
 
       <section className="section section--paper interest" id="interesse" aria-labelledby="interest-title">
-        <div className="section__index">07 / Vamos conversar</div>
+        <div className="section__index">07 / Começar por um fluxo</div>
         <div className="interest__body">
           <div className="interest__intro">
             <p className="eyebrow eyebrow--ink">Primeiros fluxos em validação</p>
-            <h2 id="interest-title">Existe uma operação que você gostaria de tirar do caminho?</h2>
+            <h2 id="interest-title">Qual trabalho recorrente sua equipe ainda precisa executar à mão?</h2>
           </div>
           <div className="interest__detail">
             <p>
-              Estamos procurando operações que perdem tempo reunindo informação, conferindo dados
-              e perseguindo o próximo passo.
+              A Relay começa com uma operação delimitada: fontes autorizadas, regras conhecidas,
+              resultado esperado e exceções que precisam de uma pessoa.
             </p>
-            <p>Se isso acontece aí, conte como o problema aparece no seu dia a dia.</p>
+            <p>
+              Se isso acontece aí, conte como o trabalho acontece hoje. A conversa serve para
+              avaliar se existe um fluxo que a Relay possa executar de forma recorrente e verificável.
+            </p>
             <a
               className="button button--navy"
               href="https://docs.google.com/forms/d/e/1FAIpQLSfype2A6Klr6f7cwxLnZY8Hr9BxfRAZT5suJLXASKsf8dsWIw/viewform"
               target="_blank"
               rel="noreferrer"
             >
-              Manifestar interesse <span aria-hidden="true">↗</span>
+              Descrever um fluxo <span aria-hidden="true">↗</span>
             </a>
             <p className="interest__note">O formulário abre no Google Forms. Não envie dados pessoais sensíveis.</p>
           </div>

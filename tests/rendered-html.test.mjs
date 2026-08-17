@@ -35,17 +35,22 @@ test("home renderiza a presença institucional completa", async () => {
     const html = await response.text();
 
     assert.match(html, /<html lang="pt-BR">/);
-    assert.match(html, /<title>Relay Studio — trabalho confiável<\/title>/);
+    assert.match(html, /<title>Relay Studio — execução operacional<\/title>/);
     assert.match(html, /Relay Studio/);
-    for (const section of ["visao", "trabalho", "produto", "processo", "principios", "privacidade", "interesse"]) {
+    for (const section of ["fluxo-exemplo", "visao", "trabalho", "produto", "processo", "principios", "privacidade", "interesse"]) {
       assert.match(html, new RegExp(`id="${section}"`));
     }
+    assert.match(html, /SaaS de execução operacional/);
+    assert.match(html, /Seu time decide/);
+    assert.match(html, /A Relay executa/);
+    assert.match(html, /Ver como entregamos/);
+    assert.match(html, /Encontrar um fluxo/);
+    assert.match(html, /Fontes autorizadas/);
+    assert.match(html, /Uma reconciliação não precisa terminar na sua equipe/);
+    assert.match(html, /Frequência, SLA, critério de aceite e cobrança ainda estão em validação/);
     assert.match(html, /trabalhando na coisa certa/);
-    assert.match(html, /Entender a visão/);
-    assert.match(html, /Ver o trabalho/);
-    assert.match(html, /Fonte autorizada/);
     assert.match(html, /direitos de acesso, exportação e/);
-    assert.match(html, /Manifestar interesse/);
+    assert.match(html, /Descrever um fluxo/);
     assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
     assert.match(html, /O formulário abre no Google Forms/);
     assert.doesNotMatch(html, /localhost:3000/);

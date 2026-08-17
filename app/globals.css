@@ -349,6 +349,98 @@ p {
   color: var(--relay-muted);
 }
 
+.execution-example {
+  padding: clamp(52px, 7vw, 100px) clamp(24px, 5vw, 80px);
+  border-bottom: 1px solid var(--relay-line);
+  color: var(--relay-ink);
+  background: var(--relay-paper);
+}
+
+.execution-example__inner {
+  display: grid;
+  grid-template-columns: minmax(150px, 18%) 1fr;
+  gap: clamp(36px, 8vw, 140px);
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.execution-example__index {
+  align-self: start;
+  color: var(--relay-muted);
+  font-family: var(--relay-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.09em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.execution-example__body {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(44px, 6vw, 96px);
+  max-width: 1120px;
+}
+
+.execution-example__intro h2 {
+  max-width: 620px;
+  font-size: clamp(2.35rem, 3.8vw, 4.4rem);
+  line-height: 0.98;
+}
+
+.execution-example__intro > p {
+  max-width: 450px;
+  margin-top: 28px;
+  color: #4e4b47;
+}
+
+.execution-example__steps {
+  align-self: end;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--relay-line);
+  list-style: none;
+}
+
+.execution-example__step {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 17px;
+  align-items: start;
+  padding: 19px 0 21px;
+  border-bottom: 1px solid var(--relay-line);
+}
+
+.execution-example__number {
+  color: var(--relay-amber);
+  font-family: var(--relay-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+}
+
+.execution-example__step h3 {
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  line-height: 1;
+}
+
+.execution-example__step p {
+  max-width: 440px;
+  margin-top: 9px;
+  color: #595650;
+  font-size: 0.92rem;
+}
+
+.execution-example__note {
+  grid-column: 2;
+  max-width: 560px;
+  margin: -10px 0 0;
+  color: var(--relay-muted);
+  font-family: var(--relay-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
 .vision__body,
 .work__body,
 .build__body,
@@ -787,6 +879,11 @@ p {
     gap: 30px;
   }
 
+  .execution-example__inner {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
   .build__body,
   .process__body,
   .principles__body,
@@ -801,6 +898,16 @@ p {
   }
 
   .section-note {
+    grid-column: auto;
+    margin-top: -28px;
+  }
+
+  .execution-example__body {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .execution-example__note {
     grid-column: auto;
     margin-top: -28px;
   }
@@ -908,6 +1015,18 @@ p {
 
   .section {
     padding: 82px 24px;
+  }
+
+  .execution-example {
+    padding: 60px 24px;
+  }
+
+  .execution-example__body {
+    gap: 38px;
+  }
+
+  .execution-example__intro h2 {
+    font-size: clamp(2.65rem, 12vw, 4.7rem);
   }
 
   .vision h2,
