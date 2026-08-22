@@ -37,14 +37,20 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /<html lang="pt-BR">/);
     assert.match(html, /<title>Relay Studio — execução operacional<\/title>/);
     assert.match(html, /Relay Studio/);
-    for (const section of ["fluxo-exemplo", "visao", "trabalho", "produto", "processo", "principios", "privacidade", "interesse"]) {
+    for (const section of ["fluxo-exemplo", "visao", "trabalho", "audit", "produto", "processo", "principios", "privacidade", "interesse"]) {
       assert.match(html, new RegExp(`id="${section}"`));
     }
     assert.match(html, /SaaS de execução operacional/);
     assert.match(html, /Seu time decide/);
     assert.match(html, /A Relay executa/);
     assert.match(html, /Ver como entregamos/);
-    assert.match(html, /Encontrar um fluxo/);
+    assert.match(html, /Avaliar um fluxo/);
+    assert.match(html, /href="#audit">Avaliar um fluxo/);
+    assert.match(html, /Audit do fluxo/);
+    assert.match(html, /Esse trabalho acontece toda semana/);
+    assert.match(html, /Comece pelo primeiro sinal/);
+    assert.match(html, /Descrever este fluxo/);
+    assert.match(html, /não envia suas respostas/);
     assert.match(html, /Fontes autorizadas/);
     assert.match(html, /Uma reconciliação não precisa terminar na sua equipe/);
     assert.match(html, /Frequência, SLA, critério de aceite e cobrança ainda estão em validação/);

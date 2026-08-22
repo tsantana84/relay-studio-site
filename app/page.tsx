@@ -1,3 +1,5 @@
+import WorkflowAudit from "./components/workflow-audit";
+
 const workExamples = [
   {
     number: "01",
@@ -101,6 +103,7 @@ export default function HomePage() {
           <nav className="site-nav" aria-label="Navegação principal">
             <a href="#visao">Visão</a>
             <a href="#trabalho">O trabalho</a>
+            <a href="#audit">Audit</a>
             <a href="#produto">A entrega</a>
             <a href="#processo">Como funciona</a>
             <a href="#privacidade">Privacidade</a>
@@ -123,8 +126,8 @@ export default function HomePage() {
                 Ver como entregamos
                 <span aria-hidden="true">↓</span>
               </a>
-              <a className="text-link text-link--light" href="#trabalho">
-                Encontrar um fluxo <span aria-hidden="true">↓</span>
+              <a className="text-link text-link--light" href="#audit">
+                Avaliar um fluxo <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
@@ -248,8 +251,10 @@ export default function HomePage() {
         </div>
       </section>
 
+      <WorkflowAudit />
+
       <section className="section section--navy build" id="produto" aria-labelledby="build-title">
-        <div className="section__index section__index--light">03 / A entrega</div>
+        <div className="section__index section__index--light">04 / A entrega</div>
         <div className="build__body">
           <div className="build__intro">
             <p className="eyebrow">O que você recebe</p>
@@ -278,7 +283,7 @@ export default function HomePage() {
       </section>
 
       <section className="section section--paper process" id="processo" aria-labelledby="process-title">
-        <div className="section__index">04 / Como funciona</div>
+        <div className="section__index">05 / Como funciona</div>
         <div className="process__body">
           <div className="process__intro">
             <p className="eyebrow eyebrow--ink">O mecanismo de entrega</p>
@@ -308,7 +313,7 @@ export default function HomePage() {
         id="principios"
         aria-labelledby="principles-title"
       >
-        <div className="section__index">05 / Como pensamos</div>
+        <div className="section__index">06 / Como pensamos</div>
         <div className="principles__body">
           <div className="principles__intro">
             <p className="eyebrow eyebrow--ink">Como construímos</p>
@@ -331,7 +336,7 @@ export default function HomePage() {
       </section>
 
       <section className="section section--navy privacy" id="privacidade" aria-labelledby="privacy-title">
-        <div className="section__index section__index--light">06 / Privacidade</div>
+        <div className="section__index section__index--light">07 / Privacidade</div>
         <div className="privacy__body">
           <div className="privacy__intro">
             <p className="eyebrow">LGPD / responsabilidade operacional</p>
@@ -363,7 +368,7 @@ export default function HomePage() {
       </section>
 
       <section className="section section--paper interest" id="interesse" aria-labelledby="interest-title">
-        <div className="section__index">07 / Começar por um fluxo</div>
+        <div className="section__index">08 / Começar por um fluxo</div>
         <div className="interest__body">
           <div className="interest__intro">
             <p className="eyebrow eyebrow--ink">Primeiros fluxos em validação</p>
