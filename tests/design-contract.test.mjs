@@ -81,6 +81,10 @@ test("o sistema visual mantém acessibilidade e responsividade", () => {
   );
   assert.match(
     css,
+    /@media \(max-width:\s*620px\)\s*\{[\s\S]*\.audit__panel::after[\s\S]*display:\s*none;/,
+  );
+  assert.match(
+    css,
     /\.button:focus-visible,\s*\.text-link:focus-visible,\s*\.audit-choice:focus-visible,\s*\.audit-reset:focus-visible,\s*\.audit-result__actions \.button:focus-visible\s*\{[^}]*z-index:\s*2;/s,
   );
   assert.match(
@@ -95,4 +99,15 @@ test("o sistema visual mantém acessibilidade e responsividade", () => {
     css,
     /\.audit-choice\s*\{[^}]*min-height:\s*44px;/s,
   );
+  assert.match(
+    css,
+    /\.audit-question::before\s*\{[^}]*pointer-events:\s*none;/s,
+  );
+
+  const reducedMotionStart = css.lastIndexOf("@media (prefers-reduced-motion: reduce)");
+  assert.notEqual(reducedMotionStart, -1);
+  const reducedMotionBlock = css.slice(reducedMotionStart);
+  assert.match(reducedMotionBlock, /transition-duration:\s*0\.01ms\s*!important;/);
+  assert.match(reducedMotionBlock, /transform:\s*none\s*!important;/);
+  assert.equal(css.lastIndexOf("@media"), reducedMotionStart);
 });

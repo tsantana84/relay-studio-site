@@ -1124,6 +1124,7 @@ p {
   height: calc(100% - 46px);
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(104, 116, 94, 0.4), rgba(104, 116, 94, 0.08));
+  pointer-events: none;
   content: "";
 }
 
