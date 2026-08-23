@@ -4,8 +4,11 @@
   --relay-amber: #e59820;
   --relay-ink: #111215;
   --relay-muted: #77736c;
+  --relay-moss: #68745e;
+  --relay-clay: #b86f50;
   --relay-line: rgba(17, 18, 21, 0.16);
   --relay-line-light: rgba(243, 239, 233, 0.2);
+  --relay-paper-shadow: rgba(17, 18, 21, 0.08);
   --relay-font-display: "Avenir Next", "Sohne", "SF Pro Display", system-ui, sans-serif;
   --relay-font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   --relay-font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -25,9 +28,25 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   min-width: 320px;
-  background: var(--relay-paper);
+  background:
+    radial-gradient(circle at top left, rgba(104, 116, 94, 0.045), transparent 34%),
+    linear-gradient(180deg, rgba(184, 111, 80, 0.035), transparent 28%),
+    var(--relay-paper);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image:
+    linear-gradient(rgba(17, 18, 21, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 18, 21, 0.08) 1px, transparent 1px);
+  background-size: 160px 160px, 160px 160px;
+  content: "";
 }
 
 a {
@@ -66,11 +85,31 @@ p {
 
 .hero {
   position: relative;
+  isolation: isolate;
   min-height: min(900px, 100vh);
   padding: 30px clamp(24px, 5vw, 80px) 34px;
   overflow: hidden;
   color: var(--relay-paper);
   background: var(--relay-navy);
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(104, 116, 94, 0.78), transparent 0 30%),
+    linear-gradient(135deg, rgba(184, 111, 80, 0.42), transparent 36%),
+    repeating-linear-gradient(
+      -12deg,
+      rgba(243, 239, 233, 0.16) 0,
+      rgba(243, 239, 233, 0.16) 1px,
+      transparent 1px,
+      transparent 22px
+    );
+  box-shadow: inset 0 -120px 180px -140px var(--relay-paper-shadow);
+  content: "";
 }
 
 .hero__topline,
@@ -336,8 +375,29 @@ p {
 }
 
 .section--paper {
+  position: relative;
+  isolation: isolate;
   color: var(--relay-ink);
   background: var(--relay-paper);
+}
+
+.section--paper::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.065;
+  background:
+    linear-gradient(180deg, rgba(104, 116, 94, 0.28), transparent 22%),
+    radial-gradient(circle at top right, rgba(184, 111, 80, 0.35), transparent 0 26%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(17, 18, 21, 0.08) 0,
+      rgba(17, 18, 21, 0.08) 1px,
+      transparent 1px,
+      transparent 24px
+    );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  content: "";
 }
 
 .section--navy {
@@ -350,18 +410,46 @@ p {
 }
 
 .execution-example {
+  position: relative;
+  isolation: isolate;
   padding: clamp(52px, 7vw, 100px) clamp(24px, 5vw, 80px);
   border-bottom: 1px solid var(--relay-line);
   color: var(--relay-ink);
   background: var(--relay-paper);
 }
 
+.execution-example::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background:
+    linear-gradient(90deg, rgba(184, 111, 80, 0.22), transparent 22%),
+    radial-gradient(circle at 78% 24%, rgba(104, 116, 94, 0.4), transparent 0 24%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(17, 18, 21, 0.07) 0,
+      rgba(17, 18, 21, 0.07) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  box-shadow: inset 0 -1px 0 rgba(17, 18, 21, 0.06);
+  content: "";
+}
+
 .execution-example__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(150px, 18%) 1fr;
   gap: clamp(36px, 8vw, 140px);
   max-width: 1440px;
   margin-inline: auto;
+}
+
+.section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .execution-example__index {
