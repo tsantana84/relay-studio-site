@@ -447,7 +447,7 @@ p {
   margin-inline: auto;
 }
 
-.section > * {
+.section--paper > * {
   position: relative;
   z-index: 1;
 }

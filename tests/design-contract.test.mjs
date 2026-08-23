@@ -8,8 +8,11 @@ const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8")
 test("a direção Arquivo vivo tem tokens e camadas sem mudar a copy", () => {
   assert.match(css, /--relay-moss\s*:/);
   assert.match(css, /--relay-clay\s*:/);
+  assert.match(css, /--relay-paper-shadow\s*:/);
+  assert.match(css, /body::before/);
   assert.match(css, /\.hero::before/);
   assert.match(css, /\.execution-example::before/);
+  assert.match(css, /\.section--paper::before/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(page, /Seu time decide\. A Relay executa o trabalho recorrente\./);
   assert.match(page, /Uma reconciliação não precisa terminar na sua equipe\./);
