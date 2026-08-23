@@ -39,3 +39,25 @@ test("hero e exemplo de fluxo têm tratamento editorial", () => {
   assert.match(css, /\.execution-example__step::before/);
   assert.match(css, /\.execution-example__note/);
 });
+
+test("as seções editoriais viram spreads e índice sem mudar a semântica", () => {
+  assert.match(css, /\.section--paper/);
+  assert.match(css, /\.section--navy/);
+  assert.match(css, /\.vision__body,\s*\.work__body,\s*\.build__body/);
+  assert.match(css, /\.work-item:nth-child\(even\)/);
+  assert.match(
+    css,
+    /\.work-item:nth-child\(odd\)\s*\{[^}]*transform:\s*translateX\(clamp\(-18px,\s*-1\.2vw,\s*-8px\)\);/s,
+  );
+  assert.match(css, /\.capability:nth-child\(odd\)/);
+  assert.match(
+    css,
+    /\.capability:nth-child\(odd\)\s*\{[^}]*transform:\s*translateX\(clamp\(-24px,\s*-1\.6vw,\s*-12px\)\);/s,
+  );
+  assert.match(css, /\.process-list::before/);
+  assert.match(css, /\.process-step::before/);
+  assert.match(css, /\.principle::before/);
+  assert.match(css, /\.principles__grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)[^}]*gap:/s);
+  assert.match(css, /@media \(max-width:\s*620px\)\s*\{[\s\S]*\.work-item:nth-child\(even\),[\s\S]*transform:\s*none;/);
+  assert.match(css, /@media \(max-width:\s*620px\)\s*\{[\s\S]*\.process-list::before[\s\S]*left:\s*15px;/);
+});
