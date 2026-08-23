@@ -5,6 +5,26 @@ import { test } from "node:test";
 const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
+function relativeLuminance(hex) {
+  const channels = hex
+    .replace("#", "")
+    .match(/.{2}/g)
+    .map((channel) => Number.parseInt(channel, 16) / 255)
+    .map((channel) =>
+      channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4,
+    );
+
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrastRatio(foreground, background) {
+  const luminances = [relativeLuminance(foreground), relativeLuminance(background)].sort(
+    (left, right) => right - left,
+  );
+
+  return (luminances[0] + 0.05) / (luminances[1] + 0.05);
+}
+
 test("a direção Arquivo vivo tem tokens e camadas sem mudar a copy", () => {
   assert.match(css, /--relay-moss\s*:/);
   assert.match(css, /--relay-clay\s*:/);
@@ -38,6 +58,27 @@ test("hero e exemplo de fluxo têm tratamento editorial", () => {
   assert.match(css, /border-left:\s*1px\s+solid\s+var\(--relay-line\)/);
   assert.match(css, /\.execution-example__step::before/);
   assert.match(css, /\.execution-example__note/);
+});
+
+test("microcopy e foco sobre papel usam contraste próprio sem alterar o foco do hero", () => {
+  assert.match(css, /--relay-clay-ink:\s*#7f4534;/);
+  assert.ok(contrastRatio("#7f4534", "#f3efe9") >= 4.5);
+  assert.ok(contrastRatio("#7f4534", "#f6f1e8") >= 4.5);
+  assert.match(
+    css,
+    /\.execution-example__note\s*\{[^}]*color:\s*var\(--relay-clay-ink\);/s,
+  );
+  assert.match(
+    css,
+    /\.audit-question__number,\s*\.audit-result__label\s*\{[^}]*color:\s*var\(--relay-clay-ink\);/s,
+  );
+  assert.match(css, /\.audit-reset\s*\{[^}]*color:\s*var\(--relay-clay-ink\);/s);
+  assert.match(css, /\.audit-reset:hover\s*\{[^}]*color:\s*var\(--relay-ink\);/s);
+  assert.match(
+    css,
+    /\.audit-choice:focus-visible,\s*\.audit-reset:focus-visible,\s*\.audit-result__actions \.button:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--relay-clay-ink\);/s,
+  );
+  assert.match(css, /a:focus-visible\s*\{[^}]*outline:\s*2px solid currentColor;/s);
 });
 
 test("as seções editoriais viram spreads e índice sem mudar a semântica", () => {
@@ -109,5 +150,9 @@ test("o sistema visual mantém acessibilidade e responsividade", () => {
   const reducedMotionBlock = css.slice(reducedMotionStart);
   assert.match(reducedMotionBlock, /transition-duration:\s*0\.01ms\s*!important;/);
   assert.match(reducedMotionBlock, /transform:\s*none\s*!important;/);
+  assert.match(
+    reducedMotionBlock,
+    /\.button:hover,\s*\.capability:hover \.capability__arrow,\s*\.process-step:hover \.process-step__arrow,\s*\.audit-choice:hover\s*\{[^}]*transform:\s*none\s*!important;/s,
+  );
   assert.equal(css.lastIndexOf("@media"), reducedMotionStart);
 });
