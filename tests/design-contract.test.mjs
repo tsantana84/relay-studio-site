@@ -61,3 +61,38 @@ test("as seções editoriais viram spreads e índice sem mudar a semântica", ()
   assert.match(css, /@media \(max-width:\s*620px\)\s*\{[\s\S]*\.work-item:nth-child\(even\),[\s\S]*transform:\s*none;/);
   assert.match(css, /@media \(max-width:\s*620px\)\s*\{[\s\S]*\.process-list::before[\s\S]*left:\s*15px;/);
 });
+
+test("o sistema visual mantém acessibilidade e responsividade", () => {
+  assert.match(css, /prefers-reduced-motion\s*:\s*reduce/);
+  assert.match(css, /focus-visible/);
+  assert.match(css, /@media \(max-width:\s*900px\)/);
+  assert.match(css, /@media \(max-width:\s*620px\)/);
+  assert.match(
+    css,
+    /@media \(max-width:\s*900px\)\s*\{[\s\S]*\.vision__detail[\s\S]*grid-template-columns:\s*1fr;/,
+  );
+  assert.match(
+    css,
+    /@media \(max-width:\s*620px\)\s*\{[\s\S]*\.hero::after[\s\S]*display:\s*none;/,
+  );
+  assert.match(
+    css,
+    /@media \(max-width:\s*620px\)\s*\{[\s\S]*\.audit::before[\s\S]*display:\s*none;/,
+  );
+  assert.match(
+    css,
+    /\.button:focus-visible,\s*\.text-link:focus-visible,\s*\.audit-choice:focus-visible,\s*\.audit-reset:focus-visible,\s*\.audit-result__actions \.button:focus-visible\s*\{[^}]*z-index:\s*2;/s,
+  );
+  assert.match(
+    css,
+    /@media \(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*\.hero::after,\s*\.signal-rail__line::after,\s*\.audit::before,\s*\.audit__panel::after[\s\S]*transform:\s*none\s*!important;/s,
+  );
+  assert.match(
+    css,
+    /@media \(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*transition-duration:\s*0\.01ms\s*!important;/s,
+  );
+  assert.match(
+    css,
+    /\.audit-choice\s*\{[^}]*min-height:\s*44px;/s,
+  );
+});
