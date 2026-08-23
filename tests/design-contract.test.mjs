@@ -24,7 +24,14 @@ test("hero e exemplo de fluxo têm tratamento editorial", () => {
   assert.match(css, /\.hero::after/);
   assert.match(css, /\.signal-rail__line::after/);
   assert.match(css, /\.signal-rail__marker--active/);
-  assert.match(css, /outline:\s*1px\s+solid\s+var\(--relay-paper\)/);
+  assert.match(
+    css,
+    /\.signal-rail__marker--active\s*\{[^}]*outline:\s*1px\s+solid\s+var\(--relay-paper\)/s,
+  );
+  assert.doesNotMatch(
+    css,
+    /\.signal-rail__line::after\s*\{[^}]*var\(--relay-amber\)/s,
+  );
   assert.match(css, /\.execution-example__inner/);
   assert.match(css, /margin-top:\s*clamp\(-48px,\s*-4vw,\s*-24px\)/);
   assert.match(css, /\.execution-example__steps/);

@@ -336,8 +336,8 @@ p {
   border-radius: 999px;
   outline: 1px solid var(--relay-paper);
   outline-offset: 3px;
-  box-shadow: 0 0 0 8px rgba(229, 152, 32, 0.14);
-  background: var(--relay-amber);
+  box-shadow: 0 0 0 8px rgba(104, 116, 94, 0.14);
+  background: rgba(104, 116, 94, 0.9);
   transform: translate(-50%, -50%);
   content: "";
 }
