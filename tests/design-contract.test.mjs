@@ -18,3 +18,17 @@ test("a direção Arquivo vivo tem tokens e camadas sem mudar a copy", () => {
   assert.match(page, /Uma reconciliação não precisa terminar na sua equipe\./);
   assert.match(page, /Começamos por fluxos recorrentes em que o resultado é claro e o trabalho manual é alto\./);
 });
+
+test("hero e exemplo de fluxo têm tratamento editorial", () => {
+  assert.match(css, /\.hero__content/);
+  assert.match(css, /\.hero::after/);
+  assert.match(css, /\.signal-rail__line::after/);
+  assert.match(css, /\.signal-rail__marker--active/);
+  assert.match(css, /outline:\s*1px\s+solid\s+var\(--relay-paper\)/);
+  assert.match(css, /\.execution-example__inner/);
+  assert.match(css, /margin-top:\s*clamp\(-48px,\s*-4vw,\s*-24px\)/);
+  assert.match(css, /\.execution-example__steps/);
+  assert.match(css, /border-left:\s*1px\s+solid\s+var\(--relay-line\)/);
+  assert.match(css, /\.execution-example__step::before/);
+  assert.match(css, /\.execution-example__note/);
+});
