@@ -1,5 +1,6 @@
 import DeliveryProof from "./components/delivery-proof";
-import { FORM_URL, siteContent } from "./content/site-content";
+import FlowFormPreview from "./components/flow-form-preview";
+import { siteContent } from "./content/site-content";
 
 export const dynamic = "force-static";
 
@@ -25,7 +26,7 @@ export default function HomePage() {
             <h1 id="hero-title">{siteContent.hero.title}</h1>
             <p className="hero__lede">{siteContent.hero.lede}</p>
             <div className="hero__actions">
-              <a className="button button--amber" href={FORM_URL} target="_blank" rel="noreferrer">
+              <a className="button button--amber" href="#formulario">
                 {siteContent.hero.primaryCta} <span aria-hidden="true">↗</span>
               </a>
               <a className="text-link text-link--light" href="#prova">
@@ -99,11 +100,8 @@ export default function HomePage() {
           <p className="eyebrow">{siteContent.cta.eyebrow}</p>
           <h2 id="contact-title">{siteContent.cta.title}</h2>
           <p>{siteContent.cta.body}</p>
-          <a className="button button--amber" href={FORM_URL} target="_blank" rel="noreferrer">
-            {siteContent.cta.action} <span aria-hidden="true">↗</span>
-          </a>
-          <p className="contact__note">{siteContent.cta.externalNote}</p>
         </div>
+        <FlowFormPreview />
       </section>
       <footer className="site-footer">
         <a className="wordmark wordmark--dark" href="#top" aria-label="Relay Studio, início">
