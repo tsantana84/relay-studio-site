@@ -4,6 +4,7 @@ import { test } from "node:test";
 
 const source = await readFile(new URL("../app/content/site-content.ts", import.meta.url), "utf8");
 const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
+const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
 test("copy posiciona primeiros pilotos sem transformar hipótese em capacidade", () => {
   assert.match(source, /O trabalho recorrente termina\. Com evidência\./);
@@ -33,4 +34,13 @@ test("formulário é curto, qualificável e não pede conteúdo operacional", ()
   assert.match(formBrief, /não envie dados pessoais sensíveis/i);
   assert.match(formBrief, /não classificar automaticamente/i);
   assert.doesNotMatch(formBrief, /anexar|upload|senha|token/i);
+});
+
+test("sistema visual reserva cor para ação, exceção e evidência", () => {
+  assert.match(css, /--relay-clay\s*:/);
+  assert.match(css, /--relay-moss\s*:/);
+  assert.match(css, /\.delivery-ledger__row--approval/);
+  assert.match(css, /\.delivery-ledger__row--result/);
+  assert.match(css, /@media \(max-width: 620px\)/);
+  assert.match(css, /:focus-visible/);
 });
