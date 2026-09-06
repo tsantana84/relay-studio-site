@@ -175,6 +175,15 @@ test("tipografia e texto editorial preservam legibilidade na superfície de pape
   assert.match(css, /\.operational-chapter\s*{[^}]*min-height:\s*72vh/);
 });
 
+test("headings e hero usam a largura editorial e o espaçamento aprovados", () => {
+  const headingRule = css.match(/h1, h2, h3, \.manifesto-cut\s*{([^}]*)}/)?.[1] ?? "";
+  const heroHeading = css.match(/\.operational-hero h1\s*{([^}]*)}/)?.[1] ?? "";
+
+  assert.match(headingRule, /font-variation-settings:\s*"wdth" 78,\s*"wght" 820/);
+  assert.match(headingRule, /letter-spacing:\s*-\.035em/);
+  assert.match(heroHeading, /letter-spacing:\s*-\.04em/);
+});
+
 test("o contrato e o sistema respeitam os limites visuais e movimento reduzido", () => {
   assert.doesNotMatch(css, /border-left:\s*4px solid var\(--relay-exception\)/);
   assert.match(css, /\.operational-chapter\[data-stage="approval"\]\s*{[^}]*color:/);
