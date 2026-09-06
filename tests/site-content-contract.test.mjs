@@ -44,3 +44,14 @@ test("sistema visual reserva cor para ação, exceção e evidência", () => {
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(css, /:focus-visible/);
 });
+
+test("tipografia e texto editorial preservam legibilidade na superfície de papel", () => {
+  const heroHeading = css.match(/\.hero h1\s*{([^}]*)}/)?.[1] ?? "";
+  assert.match(heroHeading, /font-size:\s*clamp\([^;]*,\s*6rem\)/);
+  assert.match(heroHeading, /letter-spacing:\s*-0\.04em/);
+  assert.match(css, /--relay-muted-ink\s*:/);
+  assert.match(css, /--relay-moss-ink\s*:/);
+  assert.match(css, /\.delivery-ledger__row p\s*{[^}]*color:\s*var\(--relay-muted-ink\)/);
+  assert.match(css, /\.delivery-ledger__row--result p\s*{[^}]*color:\s*var\(--relay-moss-ink\)/);
+  assert.match(css, /\.mechanism__rail li\[data-stage="result"\]\s*{[^}]*color:\s*var\(--relay-moss-ink\)/);
+});
