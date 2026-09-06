@@ -1,4 +1,5 @@
 import WorkflowAudit from "./components/workflow-audit";
+import DeliveryProof from "./components/delivery-proof";
 
 const workExamples = [
   {
@@ -155,46 +156,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="execution-example" id="fluxo-exemplo" aria-labelledby="execution-example-title">
-        <div className="execution-example__inner">
-          <div className="execution-example__index">Exemplo de fluxo / em validação</div>
-          <div className="execution-example__body">
-            <div className="execution-example__intro">
-              <h2 id="execution-example-title">Uma reconciliação não precisa terminar na sua equipe.</h2>
-              <p>
-                A Relay recebe dados autorizados, compara fontes, identifica divergências e devolve
-                uma reconciliação com fila de exceções para aprovação.
-              </p>
-            </div>
-            <ol className="execution-example__steps">
-              <li className="execution-example__step">
-                <span className="execution-example__number">01</span>
-                <div>
-                  <h3>Fontes</h3>
-                  <p>Planilhas, documentos ou sistemas que a operação autorizou.</p>
-                </div>
-              </li>
-              <li className="execution-example__step">
-                <span className="execution-example__number">02</span>
-                <div>
-                  <h3>Conferência</h3>
-                  <p>Comparação, regras e classificação do que bate ou precisa de revisão.</p>
-                </div>
-              </li>
-              <li className="execution-example__step">
-                <span className="execution-example__number">03</span>
-                <div>
-                  <h3>Entrega</h3>
-                  <p>Resultado recorrente com evidências e exceções para a pessoa certa.</p>
-                </div>
-              </li>
-            </ol>
-            <p className="execution-example__note">
-              Fluxo candidato. Frequência, SLA, critério de aceite e cobrança ainda estão em validação.
-            </p>
-          </div>
-        </div>
-      </section>
+      <DeliveryProof />
 
       <section className="section section--paper vision" id="visao" aria-labelledby="vision-title">
         <div className="section__index">01 / Visão</div>
