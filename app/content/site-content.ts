@@ -10,19 +10,73 @@ export const operationalStory = {
     primaryCta: "Mostrar um trabalho recorrente",
     secondaryCta: "Entender como funciona",
   },
-  disclosure: "Demonstração sintética · dados fictícios para explicar o percurso da entrega.",
-  productBoundary: "Esta demonstração explica a direção do produto; não representa uma operação de cliente.",
+  title: "Do trabalho manual ao resultado entregue.",
   chapters: [
-    { stage: "source", index: "01", verb: "Entra", title: "O trabalho que volta toda semana.", value: "184 pedidos · 184 repasses", detail: "Duas fontes autorizadas entram no ensaio." },
-    { stage: "preparation", index: "02", verb: "Separa", title: "O sistema encontra o que não fecha.", value: "179 correspondências · 5 exceções", detail: "Nenhuma ação externa foi tomada." },
-    { stage: "approval", index: "03", verb: "Para", title: "A automação sabe onde parar.", value: "3 aprovados · 2 devolvidos", detail: "A decisão do responsável fica registrada." },
-    { stage: "execution", index: "04", verb: "Executa", title: "Só o autorizado atravessa.", value: "3 ajustes aplicados", detail: "Os dois itens devolvidos permanecem pendentes." },
-    { stage: "result", index: "05", verb: "Prova", title: "O fim deixa evidência.", value: "182 encerrados · 2 pendentes", detail: "Critério conferido · recibo sintético #014." },
+    {
+      stage: "source",
+      index: "01",
+      verb: "Escolher",
+      title: "Escolha um trabalho recorrente",
+      detail: "Começamos por uma tarefa manual, frequente e com resultado verificável.",
+    },
+    {
+      stage: "preparation",
+      index: "02",
+      verb: "Preparar",
+      title: "A Relay prepara o trabalho",
+      detail: "Reúne informações de fontes autorizadas e aplica as regras combinadas.",
+    },
+    {
+      stage: "approval",
+      index: "03",
+      verb: "Decidir",
+      title: "As exceções chegam à sua equipe",
+      detail: "O que exige julgamento humano para. A pessoa responsável decide como seguir.",
+    },
+    {
+      stage: "execution",
+      index: "04",
+      verb: "Executar",
+      title: "Só o que foi autorizado é executado",
+      detail: "A Relay conclui as etapas aprovadas e mantém o restante pendente.",
+    },
+    {
+      stage: "result",
+      index: "05",
+      verb: "Registrar",
+      title: "Você recebe o resultado e o registro",
+      detail: "Fica claro o que foi concluído, o que continua pendente e quais decisões foram tomadas.",
+    },
   ],
-  manifesto: {
-    decision: "Você entra quando importa.",
-    closing: "Sem caixa-preta. Sem teatro. Com responsabilidade.",
+  railStates: {
+    preparation: { prepared: "preparado", exception: "exceção" },
+    approval: { approved: "aprovado", returned: "devolvido" },
   },
+  impact: "A Relay executa. Sua equipe decide o que exige julgamento.",
+} as const;
+
+export const useCaseExamples = {
+  title: "Que trabalho está consumindo tempo demais?",
+  intro: "Alguns exemplos que podemos avaliar com você:",
+  items: [
+    {
+      title: "Conferir valores entre fontes",
+      body: "Comparar pedidos, pagamentos, repasses ou cobranças e separar o que precisa de atenção.",
+    },
+    {
+      title: "Preparar relatórios recorrentes",
+      body: "Reunir informações, aplicar regras combinadas e deixar o resultado pronto para revisão.",
+    },
+    {
+      title: "Acompanhar prazos e pendências",
+      body: "Identificar o que está atrasado, avisar as pessoas responsáveis e manter o acompanhamento organizado.",
+    },
+    {
+      title: "Atualizar sistemas depois de uma decisão",
+      body: "Executar as etapas aprovadas e registrar o que foi feito e o que continua pendente.",
+    },
+  ],
+  boundary: "Estes são exemplos de trabalhos que podemos avaliar para um piloto. Não são soluções prontas nem resultados comprovados de clientes.",
 } as const;
 
 export const pilotContract = {

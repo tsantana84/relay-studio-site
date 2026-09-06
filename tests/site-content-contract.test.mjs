@@ -9,12 +9,16 @@ const pageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "
 const heroSource = await readFile(new URL("../app/components/operational-hero.tsx", import.meta.url), "utf8");
 const storySource = await readFile(new URL("../app/components/operational-story.tsx", import.meta.url), "utf8");
 const railSource = await readFile(new URL("../app/components/operational-rail.tsx", import.meta.url), "utf8");
+const useCasesSource = await readFile(
+  new URL("../app/components/use-case-examples.tsx", import.meta.url),
+  "utf8",
+).catch(() => "");
 const manifestoSource = await readFile(new URL("../app/components/manifesto-cut.tsx", import.meta.url), "utf8");
 const layoutSource = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
 const fontsCss = await readFile(new URL("../public/fonts/fonts.css", import.meta.url), "utf8");
 const motion = await readFile(new URL("../app/components/operational-story-motion.tsx", import.meta.url), "utf8");
 
-test("a história operacional segue uma tarefa até a evidência", () => {
+test("a história explica cinco etapas sem métricas inventadas", () => {
   const stages = ["source", "preparation", "approval", "execution", "result"];
   let cursor = -1;
   for (const stage of stages) {
@@ -22,11 +26,17 @@ test("a história operacional segue uma tarefa até a evidência", () => {
     assert.ok(next > cursor, `${stage} deve vir depois do estágio anterior`);
     cursor = next;
   }
-  assert.match(source, /Você entra quando importa/);
-  assert.match(source, /Sem caixa-preta\. Sem teatro\. Com responsabilidade\./);
-  assert.match(source, /dados fictícios/i);
-  assert.match(pageSource, /<OperationalHero \/>/);
-  assert.match(pageSource, /<OperationalStory \/>/);
+  for (const copy of [
+    "Escolha um trabalho recorrente",
+    "A Relay prepara o trabalho",
+    "As exceções chegam à sua equipe",
+    "Só o que foi autorizado é executado",
+    "Você recebe o resultado e o registro",
+  ]) {
+    assert.match(source, new RegExp(copy));
+  }
+  assert.match(source, /A Relay executa\. Sua equipe decide o que exige julgamento\./);
+  assert.doesNotMatch(source, /184 pedidos|179 correspondências|3 aprovados|182 encerrados|recibo sintético #014/);
   assert.match(storySource, /<ol[^>]*className="operational-story__chapters"/);
 });
 
@@ -80,17 +90,30 @@ test("o manifesto move conteúdo interno sem deslocar sua caixa", () => {
   assert.match(enhancedCss, /\.manifesto-cut__text\s*{[^}]*transform:/);
 });
 
-test("o trilho deriva ramificações e recibo do conteúdo central", () => {
-  for (const literal of ["179 correspondências", "5 exceções", "3 aprovados", "2 devolvidos", "recibo sintético #014"]) {
-    assert.doesNotMatch(railSource, new RegExp(literal));
+test("o trilho recebe estados explícitos em vez de extrair números da copy", () => {
+  for (const label of ["preparado", "exceção", "aprovado", "devolvido"]) {
+    assert.match(source, new RegExp(label));
   }
-  assert.match(railSource, /chapter\.stage === "preparation"/);
-  assert.match(railSource, /chapter\.stage === "approval"/);
-  assert.match(railSource, /chapter\.stage === "result"/);
-  assert.match(railSource, /operational-rail__branch--pending/);
-  assert.match(css, /\[data-active-stage="approval"\][^}]*--rail-progress:/);
-  assert.match(css, /\[data-active-stage="execution"\][\s\S]*?operational-rail__branch--approved[^}]*scaleY\(1\)/);
-  assert.match(css, /\[data-active-stage="result"\][\s\S]*?operational-rail__branch-group[^}]*opacity:\s*1/);
+  assert.match(railSource, /railStates\.preparation\.prepared/);
+  assert.match(railSource, /railStates\.preparation\.exception/);
+  assert.match(railSource, /railStates\.approval\.approved/);
+  assert.match(railSource, /railStates\.approval\.returned/);
+  assert.doesNotMatch(railSource, /split\(" · "\)|receipt/);
+});
+
+test("os exemplos são concretos e aparecem com limite de evidência", () => {
+  for (const example of [
+    "Conferir valores entre fontes",
+    "Preparar relatórios recorrentes",
+    "Acompanhar prazos e pendências",
+    "Atualizar sistemas depois de uma decisão",
+  ]) {
+    assert.match(source, new RegExp(example));
+  }
+  assert.match(source, /podemos avaliar para um piloto/);
+  assert.match(source, /Não são soluções prontas nem resultados comprovados de clientes/);
+  assert.match(pageSource, /<UseCaseExamples \/>/);
+  assert.match(useCasesSource, /aria-labelledby="use-cases-title"/);
 });
 
 test("formulário é curto, qualificável e não pede conteúdo operacional", () => {

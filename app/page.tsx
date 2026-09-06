@@ -3,6 +3,7 @@ import OperationalHero from "./components/operational-hero";
 import OperationalStoryMotion from "./components/operational-story-motion";
 import OperationalStory from "./components/operational-story";
 import PilotContract from "./components/pilot-contract";
+import UseCaseExamples from "./components/use-case-examples";
 import { siteContent } from "./content/site-content";
 
 export const dynamic = "force-static";
@@ -13,6 +14,7 @@ export default function HomePage() {
       <OperationalHero />
       <OperationalStory />
       <OperationalStoryMotion />
+      <UseCaseExamples />
       <PilotContract />
       <section className="contact" id="contato" aria-labelledby="contact-title">
         <div className="contact__body">
