@@ -495,14 +495,19 @@ p { line-height: 1.55; }
   .limits,
   .contact { padding-left: 24px; padding-right: 24px; }
 
-  .operational-hero__topline { align-items: flex-start; gap: 20px; }
+  .operational-hero__topline { align-items: flex-start; flex-wrap: wrap; gap: 20px; }
 
   .site-nav {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    width: 100%;
+    justify-content: flex-start;
     gap: 12px;
   }
+
+  .operational-hero__content { width: 100%; max-width: 100%; }
+  .operational-hero__lede { max-width: 100%; overflow-wrap: break-word; }
+  .operational-hero__actions { flex-direction: column; align-items: flex-start; gap: 18px; }
 
   .button { min-height: 44px; }
   .flow-form-preview form { grid-template-columns: 1fr; }

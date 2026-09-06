@@ -74,3 +74,11 @@ test("a história fica visível sem melhoria progressiva", () => {
   assert.doesNotMatch(css, /html\[data-motion-ready="true"\]/);
   assert.doesNotMatch(css, /rotate\(/);
 });
+
+test("a abertura não cria overflow horizontal no viewport mobile", () => {
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 620px)"));
+  assert.match(mobileCss, /\.operational-hero__topline\s*{[^}]*flex-wrap:\s*wrap/);
+  assert.match(mobileCss, /\.site-nav\s*{[^}]*width:\s*100%[^}]*justify-content:\s*flex-start/);
+  assert.match(mobileCss, /\.operational-hero__content\s*{[^}]*width:\s*100%[^}]*max-width:\s*100%/);
+  assert.match(mobileCss, /\.operational-hero__lede\s*{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*break-word/);
+});
