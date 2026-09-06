@@ -78,6 +78,8 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /Impacto hoje/);
     assert.match(html, /Prévia sem envio/);
     assert.match(html, /Confirmo que não enviei dados pessoais sensíveis, credenciais nem conteúdo operacional real\./);
+    assert.match(html, /target="_blank"/);
+    assert.match(html, /rel="noreferrer"/);
     assert.match(html, /href="#formulario">Descrever um fluxo/);
     const primaryCtaStart = html.indexOf('href="#formulario"');
     const primaryCtaEnd = html.indexOf("</a>", primaryCtaStart);

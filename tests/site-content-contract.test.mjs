@@ -90,6 +90,24 @@ test("o contrato usa limites horizontais e o sistema respeita movimento reduzido
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?transition-duration:\s*0\.01ms/);
 });
 
+test("a experiência final preserva semântica, foco e fallbacks responsivos", () => {
+  assert.match(storySource, /aria-labelledby="story-title"/);
+  assert.match(storySource, /aria-hidden="true"/);
+  assert.match(css, /:focus-visible/);
+  assert.match(css, /@media \(max-width:\s*768px\)/);
+  assert.match(css, /@media \(max-width:\s*420px\)/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+});
+
+test("o breakpoint compacto mantém texto e alvos interativos dentro do viewport", () => {
+  assert.match(css, /\.contact h2\s*{[^}]*max-width:\s*10ch[^}]*font-size:\s*clamp\(2\.5rem,\s*5vw,\s*5\.5rem\)[^}]*overflow-wrap:\s*normal/);
+  const compactCss = css.slice(css.indexOf("@media (max-width: 420px)"));
+  assert.match(compactCss, /\.site-nav a[^}]*min-width:\s*44px/);
+  assert.match(compactCss, /\.flow-form-preview__confirmation input\s*{[^}]*width:\s*44px[^}]*height:\s*44px/);
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 620px)"));
+  assert.match(mobileCss, /\.pilot-contract__steps h3\s*{[^}]*max-width:\s*14ch[^}]*font-variation-settings:\s*"wdth" 90[^}]*line-height:\s*1\.05/);
+});
+
 test("o controlador suspende trabalho e preserva fallback", () => {
   assert.match(motion, /if \(!\("IntersectionObserver" in window\)\) return/);
   assert.match(motion, /if \(!visible \|\| reduced\.matches \|\| frame\) return/);
