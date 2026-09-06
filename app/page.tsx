@@ -27,7 +27,7 @@ export default function HomePage() {
             <p className="hero__lede">{siteContent.hero.lede}</p>
             <div className="hero__actions">
               <a className="button button--amber" href="#formulario">
-                {siteContent.hero.primaryCta} <span aria-hidden="true">↗</span>
+                {siteContent.hero.primaryCta}
               </a>
               <a className="text-link text-link--light" href="#prova">
                 {siteContent.hero.secondaryCta} <span aria-hidden="true">↓</span>

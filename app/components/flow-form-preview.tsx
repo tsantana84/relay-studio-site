@@ -30,7 +30,7 @@ export default function FlowFormPreview() {
         ))}
         <label className="flow-form-preview__confirmation">
           <input required type="checkbox" />
-          <span>Confirmo que não incluí dados sensíveis ou conteúdo operacional real.</span>
+          <span>Confirmo que não enviei dados pessoais sensíveis, credenciais nem conteúdo operacional real.</span>
         </label>
         <button className="button button--amber" type="submit">{siteContent.form.submit}</button>
       </form>
