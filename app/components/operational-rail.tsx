@@ -6,8 +6,9 @@ type Chapter = {
 
 export default function OperationalRail({ chapters }: { chapters: readonly Chapter[] }) {
   return (
-    <div className="operational-rail">
+    <div className="operational-rail" data-story-rail>
       <div className="operational-rail__line" />
+      <div className="operational-rail__active" />
       <ol className="operational-rail__stops">
         {chapters.map((chapter) => (
           <li data-stage={chapter.stage} key={chapter.stage}>
@@ -16,6 +17,7 @@ export default function OperationalRail({ chapters }: { chapters: readonly Chapt
           </li>
         ))}
       </ol>
+      <p className="operational-rail__receipt">Recibo sintético #014 · 182 encerrados · 2 pendentes</p>
     </div>
   );
 }

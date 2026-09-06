@@ -9,6 +9,7 @@ const pageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "
 const storySource = await readFile(new URL("../app/components/operational-story.tsx", import.meta.url), "utf8");
 const layoutSource = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
 const fontsCss = await readFile(new URL("../public/fonts/fonts.css", import.meta.url), "utf8");
+const motion = await readFile(new URL("../app/components/operational-story-motion.tsx", import.meta.url), "utf8");
 
 test("a história operacional segue uma tarefa até a evidência", () => {
   const stages = ["source", "preparation", "approval", "execution", "result"];
@@ -89,10 +90,15 @@ test("o contrato usa limites horizontais e o sistema respeita movimento reduzido
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?transition-duration:\s*0\.01ms/);
 });
 
-test("a história fica visível sem melhoria progressiva", () => {
-  assert.doesNotMatch(pageSource, /SiteMotion/);
-  assert.doesNotMatch(css, /html\[data-motion-ready="true"\]/);
-  assert.doesNotMatch(css, /rotate\(/);
+test("o controlador suspende trabalho e preserva fallback", () => {
+  assert.match(motion, /if \(!\("IntersectionObserver" in window\)\) return/);
+  assert.match(motion, /if \(!visible \|\| reduced\.matches \|\| frame\) return/);
+  assert.match(motion, /cancelAnimationFrame/);
+  assert.match(motion, /document\.fonts\.ready/);
+  assert.match(motion, /data-active-stage|activeStage/);
+  assert.match(motion, /removeProperty\("--story-progress"\)/);
+  assert.match(css, /@media \(min-width: 769px\) and \(prefers-reduced-motion: no-preference\)/);
+  assert.doesNotMatch(css, /cubic-bezier\([^)]*1\.5/);
 });
 
 test("a abertura não cria overflow horizontal no viewport mobile", () => {

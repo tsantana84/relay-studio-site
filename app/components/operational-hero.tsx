@@ -2,7 +2,7 @@ import { operationalStory } from "../content/site-content";
 
 export default function OperationalHero() {
   return (
-    <section className="operational-hero" id="top" aria-labelledby="hero-title">
+    <section className="operational-hero" id="top" aria-labelledby="hero-title" data-operational-hero>
       <header className="operational-hero__topline">
         <a className="wordmark" href="#top" aria-label="Relay Studio, início">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -17,7 +17,7 @@ export default function OperationalHero() {
       </header>
       <div className="operational-hero__content">
         <p className="eyebrow">{operationalStory.hero.kicker}</p>
-        <h1 id="hero-title">{operationalStory.hero.title} <em>{operationalStory.hero.accent}</em></h1>
+        <h1 className="operational-hero__title" id="hero-title">{operationalStory.hero.title} <em>{operationalStory.hero.accent}</em></h1>
         <p className="operational-hero__lede">{operationalStory.hero.lede}</p>
         <div className="operational-hero__actions">
           <a className="button button--amber" href="#formulario">{operationalStory.hero.primaryCta}</a>

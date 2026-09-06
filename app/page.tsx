@@ -1,5 +1,6 @@
 import FlowFormPreview from "./components/flow-form-preview";
 import OperationalHero from "./components/operational-hero";
+import OperationalStoryMotion from "./components/operational-story-motion";
 import OperationalStory from "./components/operational-story";
 import PilotContract from "./components/pilot-contract";
 import { siteContent } from "./content/site-content";
@@ -11,6 +12,7 @@ export default function HomePage() {
     <main>
       <OperationalHero />
       <OperationalStory />
+      <OperationalStoryMotion />
       <PilotContract />
       <section className="contact" id="contato" aria-labelledby="contact-title">
         <div className="contact__body">
