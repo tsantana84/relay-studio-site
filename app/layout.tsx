@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Relay Studio — execução operacional",
   description:
-    "A Relay Studio é um SaaS de execução operacional. Transformamos dados autorizados e regras da sua operação em trabalho recorrente, verificável e concluído.",
+    "A Relay avalia primeiros pilotos de execução operacional para transformar um fluxo recorrente em resultado, exceções e evidência.",
   icons: {
     icon: "brand/relay-icon-dark.svg",
   },

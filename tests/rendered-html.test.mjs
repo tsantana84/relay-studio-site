@@ -37,10 +37,24 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /<html lang="pt-BR">/);
     assert.match(html, /<title>Relay Studio — execução operacional<\/title>/);
     assert.match(html, /Relay Studio/);
-    for (const section of ["visao", "trabalho", "audit", "produto", "processo", "principios", "privacidade", "interesse"]) {
-      assert.match(html, new RegExp(`id="${section}"`));
+    const sections = ["top", "prova", "trabalho", "piloto", "mecanismo", "limites", "contato"];
+    let previous = -1;
+    for (const section of sections) {
+      const position = html.indexOf(`id="${section}"`);
+      assert.ok(position > previous, `#${section} deve vir depois da seção anterior`);
+      previous = position;
     }
-    assert.match(html, /id="prova"/);
+
+    assert.match(html, /O trabalho recorrente termina\. Com evidência\./);
+    assert.match(html, /Começamos pelo que se repete, pesa e precisa fechar/);
+    assert.match(html, /Começar pequeno é parte do método/);
+    assert.match(html, /A decisão humana vem antes da ação/);
+    assert.match(html, /Antes de executar, o limite precisa estar claro/);
+    assert.match(html, /Qual trabalho recorrente ainda termina na sua equipe/);
+    assert.match(html, /href="#prova">Ver uma entrega/);
+    assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
+    assert.doesNotMatch(html, /id="audit"/);
+    assert.doesNotMatch(html, /Forte candidato|Vale investigar|Ainda não é prioridade/);
     assert.match(html, /Demonstração sintética/);
     assert.match(html, /Dados fictícios para demonstrar o percurso da entrega/);
     const proofStart = html.indexOf('id="prova"');
@@ -54,21 +68,7 @@ test("home renderiza a presença institucional completa", async () => {
     }
     assert.match(html, /recibo #014/);
     assert.match(html, /Frequência, SLA, critério de aceite e cobrança continuam em validação/);
-    assert.match(html, /SaaS de execução operacional/);
-    assert.match(html, /Seu time decide/);
-    assert.match(html, /A Relay executa/);
-    assert.match(html, /Ver como entregamos/);
-    assert.match(html, /Avaliar um fluxo/);
-    assert.match(html, /href="#audit">Avaliar um fluxo/);
-    assert.match(html, /Audit do fluxo/);
-    assert.match(html, /Esse trabalho acontece toda semana/);
-    assert.match(html, /Comece pelo primeiro sinal/);
-    assert.match(html, /Descrever este fluxo/);
-    assert.match(html, /não envia suas respostas/);
-    assert.match(html, /Fontes autorizadas/);
-    assert.match(html, /trabalhando na coisa certa/);
-    assert.match(html, /direitos de acesso, exportação e/);
-    assert.match(html, /Descrever um fluxo/);
+    assert.match(html, /enviar dados pessoais sensíveis/);
     assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
     assert.match(html, /O formulário abre no Google Forms/);
     assert.doesNotMatch(html, /localhost:3000/);
