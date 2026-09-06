@@ -10,6 +10,28 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const vinextBin = path.join(projectRoot, "node_modules", ".bin", "vinext");
 const port = 3107;
 
+function assertOperationalStory(html) {
+  const list = html.match(/<ol class="operational-story__chapters"[\s\S]*?<\/ol>/)?.[0] ?? "";
+  let cursor = -1;
+  for (const stage of ["source", "preparation", "approval", "execution", "result"]) {
+    const next = list.indexOf(`data-stage="${stage}"`);
+    assert.ok(next > cursor, `${stage} deve vir depois do estágio anterior na lista semântica`);
+    cursor = next;
+  }
+  assert.match(html, /Uma tarefa entra\. Uma prova sai\./);
+  assert.match(html, /Demonstração sintética/);
+  assert.match(html, /não representa uma operação de cliente/);
+  assert.match(html, /Você entra quando importa/);
+  assert.match(html, /recibo sintético #014/);
+  assert.match(html, /id="formulario"/);
+  assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
+  assert.match(html, /operational-rail__branch operational-rail__branch--matched">179 correspondências/);
+  assert.match(html, /operational-rail__branch operational-rail__branch--exception">5 exceções/);
+  assert.match(html, /operational-rail__branch operational-rail__branch--approved">3 aprovados/);
+  assert.match(html, /operational-rail__branch operational-rail__branch--pending">2 devolvidos/);
+  assert.match(html, /operational-rail__receipt">Critério conferido · recibo sintético #014 · 182 encerrados · 2 pendentes/);
+}
+
 async function waitForServer(url, timeoutMs = 15_000) {
   const startedAt = Date.now();
   while (Date.now() - startedAt < timeoutMs) {
@@ -41,7 +63,7 @@ test("home renderiza a presença institucional completa", async () => {
       /<meta name="description" content="A Relay avalia primeiros pilotos de execução operacional para transformar um fluxo recorrente em resultado, exceções e evidência\."\/>/,
     );
     assert.match(html, /Relay Studio/);
-    const sections = ["top", "prova", "trabalho", "piloto", "mecanismo", "limites", "contato"];
+    const sections = ["top", "prova", "piloto", "contato"];
     let previous = -1;
     for (const section of sections) {
       const position = html.indexOf(`id="${section}"`);
@@ -49,18 +71,22 @@ test("home renderiza a presença institucional completa", async () => {
       previous = position;
     }
 
-    assert.match(html, /O trabalho recorrente termina\. Com evidência\./);
-    assert.match(html, /Começamos pelo que se repete, pesa e precisa fechar/);
+    assert.match(html, /O trabalho anda\./);
+    const hero = html.slice(html.indexOf('id="top"'), html.indexOf('id="prova"'));
+    assert.match(hero, /Primeiros fluxos em validação/);
     assert.match(html, /Começar pequeno é parte do método/);
-    assert.match(html, /A decisão humana vem antes da ação/);
-    assert.match(html, /Antes de executar, o limite precisa estar claro/);
+    assert.match(html, /O limite vem antes da execução/);
     assert.match(html, /Qual trabalho recorrente ainda termina na sua equipe/);
-    assert.match(html, /href="#prova">Ver uma entrega/);
+    assert.match(html, /href="#prova">Acompanhar uma entrega/);
+    assert.match(html, /href="#limites">Limites/);
+    assert.match(html, /id="limites"/);
     assert.match(html, /id="formulario"/);
     assert.match(html, /Prévia local · nenhum dado é enviado/);
     assert.match(html, /Impacto hoje/);
     assert.match(html, /Prévia sem envio/);
     assert.match(html, /Confirmo que não enviei dados pessoais sensíveis, credenciais nem conteúdo operacional real\./);
+    assert.match(html, /target="_blank"/);
+    assert.match(html, /rel="noreferrer"/);
     assert.match(html, /href="#formulario">Descrever um fluxo/);
     const primaryCtaStart = html.indexOf('href="#formulario"');
     const primaryCtaEnd = html.indexOf("</a>", primaryCtaStart);
@@ -69,18 +95,7 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
     assert.doesNotMatch(html, /id="audit"/);
     assert.doesNotMatch(html, /Forte candidato|Vale investigar|Ainda não é prioridade/);
-    assert.match(html, /Demonstração sintética/);
-    assert.match(html, /Dados fictícios para demonstrar o percurso da entrega/);
-    const proofStart = html.indexOf('id="prova"');
-    const proofEnd = html.indexOf("</section>", proofStart);
-    const proof = html.slice(proofStart, proofEnd);
-    let stageCursor = -1;
-    for (const stage of ["source", "preparation", "approval", "execution", "result"]) {
-      const next = proof.indexOf(`data-stage="${stage}"`);
-      assert.ok(next > stageCursor, `${stage} deve vir depois do estágio anterior dentro de #prova`);
-      stageCursor = next;
-    }
-    assert.match(html, /recibo #014/);
+    assertOperationalStory(html);
     assert.match(html, /Frequência, SLA, critério de aceite e cobrança continuam em validação/);
     assert.match(html, /enviar dados pessoais sensíveis/);
     assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
@@ -114,4 +129,5 @@ test("o build produz uma saída estática para o GitHub Pages", async () => {
   assert.match(staticHtml, /_next\/static/);
   assert.match(staticHtml, /brand\/relay-icon-light\.svg/);
   assert.match(staticHtml, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
+  assertOperationalStory(staticHtml);
 });

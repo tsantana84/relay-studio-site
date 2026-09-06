@@ -10,7 +10,7 @@ Lideranças de operações e financeiro que ainda fecham manualmente trabalhos r
 
 ## Product Purpose
 
-O site institucional apresenta a Relay com honestidade e busca gerar conversas qualificadas para os primeiros pilotos. A narrativa conduz da promessa à prova sintética, ao reconhecimento do trabalho, ao piloto, ao mecanismo governado, aos limites e à conversão. Sucesso nesta fase significa entendimento correto da oferta e do próximo passo — não prova de produção, resultado de cliente ou validação de mercado.
+O site institucional apresenta a Relay com honestidade e busca gerar conversas qualificadas para os primeiros pilotos. A experiência estática acompanha uma tarefa recorrente sintética das fontes autorizadas à preparação, aprovação humana, execução autorizada e resultado registrado; só então apresenta o contrato do piloto, os limites e a conversa. Sucesso nesta fase significa entendimento correto da oferta e do próximo passo — não prova de produção, resultado de cliente ou validação de mercado.
 
 ## Brand Personality
 
