@@ -96,10 +96,20 @@ test("o hero mantém a maturidade junto da promessa", () => {
 });
 
 test("a navegação nomeia as seções e leva a ação principal ao contato", () => {
-  for (const label of ["Como funciona", "Onde começar", "Piloto"]) {
-    assert.match(heroSource, new RegExp(label));
+  const navigation = [
+    ["Como funciona", "#como-funciona"],
+    ["Onde começar", "#onde-comecar"],
+    ["Piloto", "#piloto"],
+  ];
+  for (const [label, href] of navigation) {
+    assert.match(source, new RegExp(`label: "${label}", href: "${href}"`));
   }
-  assert.match(heroSource, /href="#contato"/);
+  assert.match(source, /action: \{ label: operationalStory\.hero\.primaryCta, href: "#contato" \}/);
+  assert.match(heroSource, /siteNavigation/);
+  assert.match(heroSource, /siteNavigation\.items\.map/);
+  assert.match(heroSource, /siteNavigation\.action\.href/);
+  assert.match(heroSource, /siteNavigation\.action\.label/);
+  assert.doesNotMatch(heroSource, /Como funciona|Onde começar|Piloto|Mostrar um trabalho recorrente/);
   assert.match(heroSource, /href="#como-funciona"/);
   assert.doesNotMatch(heroSource, /href="#prova"|href="#limites"/);
 });

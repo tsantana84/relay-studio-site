@@ -1,4 +1,4 @@
-import { operationalStory } from "../content/site-content";
+import { operationalStory, siteNavigation } from "../content/site-content";
 
 export default function OperationalHero() {
   return (
@@ -10,10 +10,12 @@ export default function OperationalHero() {
           <span>Relay Studio</span>
         </a>
         <nav className="site-nav" aria-label="Navegação principal">
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#onde-comecar">Onde começar</a>
-          <a href="#piloto">Piloto</a>
-          <a className="site-nav__action" href="#contato">Mostrar um trabalho recorrente</a>
+          {siteNavigation.items.map((item) => (
+            <a href={item.href} key={item.href}>{item.label}</a>
+          ))}
+          <a className="site-nav__action" href={siteNavigation.action.href}>
+            {siteNavigation.action.label}
+          </a>
         </nav>
       </header>
       <div className="operational-hero__content">

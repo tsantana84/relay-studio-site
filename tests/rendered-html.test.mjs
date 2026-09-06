@@ -83,6 +83,10 @@ test("home renderiza a presença institucional completa", async () => {
     ]) {
       assert.match(html, new RegExp(example));
     }
+    assert.match(
+      html,
+      /Estes são exemplos de trabalhos que podemos avaliar para um piloto\. Não são soluções prontas nem resultados comprovados de clientes\./,
+    );
     assert.match(html, /Comece por um trabalho\. Prove o valor antes de ampliar\./);
     for (const step of ["Escolher", "Combinar", "Testar", "Decidir"]) {
       assert.match(html, new RegExp(`>${step}<`));

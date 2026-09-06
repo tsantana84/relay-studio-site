@@ -55,6 +55,15 @@ export const operationalStory = {
   impact: "A Relay executa. Sua equipe decide o que exige julgamento.",
 } as const;
 
+export const siteNavigation = {
+  items: [
+    { label: "Como funciona", href: "#como-funciona" },
+    { label: "Onde começar", href: "#onde-comecar" },
+    { label: "Piloto", href: "#piloto" },
+  ],
+  action: { label: operationalStory.hero.primaryCta, href: "#contato" },
+} as const;
+
 export const useCaseExamples = {
   title: "Que trabalho está consumindo tempo demais?",
   intro: "Alguns exemplos que podemos avaliar com você:",
