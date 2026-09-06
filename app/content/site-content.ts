@@ -3,13 +3,12 @@ export const FORM_URL =
 
 export const operationalStory = {
   hero: {
-    kicker: "Um fluxo delimitado",
-    title: "O trabalho anda.",
-    accent: "Você entra quando importa.",
-    status: "Primeiros fluxos em validação",
-    lede: "A Relay prepara, separa exceções e executa apenas o que foi autorizado.",
-    primaryCta: "Descrever um fluxo",
-    secondaryCta: "Acompanhar uma entrega",
+    kicker: "SOFTWARE PARA EXECUÇÃO OPERACIONAL",
+    title: "Reduza o custo do trabalho recorrente sem perder o controle.",
+    status: "Primeiros pilotos em validação",
+    lede: "A Relay executa etapas manuais e repetitivas, leva as exceções para sua equipe decidir e registra o resultado.",
+    primaryCta: "Mostrar um trabalho recorrente",
+    secondaryCta: "Entender como funciona",
   },
   disclosure: "Demonstração sintética · dados fictícios para explicar o percurso da entrega.",
   productBoundary: "Esta demonstração explica a direção do produto; não representa uma operação de cliente.",

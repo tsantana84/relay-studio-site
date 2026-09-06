@@ -49,17 +49,28 @@ test("o sistema visual usa fontes locais e cores semânticas", () => {
   }
 });
 
-test("copy posiciona uma entrega delimitada sem transformar hipótese em capacidade", () => {
-  assert.match(source, /O trabalho anda\./);
-  assert.match(source, /Um fluxo delimitado/);
-  assert.match(source, /Demonstração sintética/);
-  assert.match(source, /Descrever um fluxo/);
+test("copy abre com benefício econômico, categoria e controle humano", () => {
+  assert.match(source, /SOFTWARE PARA EXECUÇÃO OPERACIONAL/);
+  assert.match(source, /Reduza o custo do trabalho recorrente sem perder o controle\./);
+  assert.match(source, /A Relay executa etapas manuais e repetitivas/);
+  assert.match(source, /leva as exceções para sua equipe decidir/);
+  assert.match(source, /Mostrar um trabalho recorrente/);
+  assert.match(source, /Entender como funciona/);
   assert.doesNotMatch(source, /garantimos|autônom[oa]|qualquer empresa|em produção/i);
 });
 
 test("o hero mantém a maturidade junto da promessa", () => {
-  assert.match(source, /status: "Primeiros fluxos em validação"/);
+  assert.match(source, /status: "Primeiros pilotos em validação"/);
   assert.match(heroSource, /operationalStory\.hero\.status/);
+});
+
+test("a navegação nomeia as seções e leva a ação principal ao contato", () => {
+  for (const label of ["Como funciona", "Onde começar", "Piloto"]) {
+    assert.match(heroSource, new RegExp(label));
+  }
+  assert.match(heroSource, /href="#contato"/);
+  assert.match(heroSource, /href="#como-funciona"/);
+  assert.doesNotMatch(heroSource, /href="#prova"|href="#limites"/);
 });
 
 test("o manifesto move conteúdo interno sem deslocar sua caixa", () => {
@@ -103,7 +114,7 @@ test("sistema visual reserva cor para ação, exceção e evidência", () => {
 test("tipografia e texto editorial preservam legibilidade na superfície de papel", () => {
   const heroHeading = css.match(/\.operational-hero h1\s*{([^}]*)}/)?.[1] ?? "";
   assert.match(heroHeading, /font-size:\s*clamp\(/);
-  assert.match(heroHeading, /line-height:\s*\.74/);
+  assert.match(heroHeading, /line-height:\s*\.82/);
   assert.match(css, /--relay-font-body:\s*"Geologica Variable"/);
   assert.match(css, /@media \(max-width: 768px\)[\s\S]*?\.operational-story__stage\s*{[^}]*position:\s*static/);
   assert.match(css, /\.operational-story__chapters\s*{[^}]*list-style:\s*none/);

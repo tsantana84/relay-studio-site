@@ -10,19 +10,24 @@ export default function OperationalHero() {
           <span>Relay Studio</span>
         </a>
         <nav className="site-nav" aria-label="Navegação principal">
-          <a href="#prova">Prova</a>
-          <a href="#piloto">Primeiro piloto</a>
-          <a href="#limites">Limites</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#onde-comecar">Onde começar</a>
+          <a href="#piloto">Piloto</a>
+          <a className="site-nav__action" href="#contato">Mostrar um trabalho recorrente</a>
         </nav>
       </header>
       <div className="operational-hero__content">
         <p className="eyebrow">{operationalStory.hero.kicker}</p>
-        <h1 className="operational-hero__title" id="hero-title">{operationalStory.hero.title} <em>{operationalStory.hero.accent}</em></h1>
+        <h1 className="operational-hero__title" id="hero-title">
+          {operationalStory.hero.title}
+        </h1>
         <p className="operational-hero__status">{operationalStory.hero.status}</p>
         <p className="operational-hero__lede">{operationalStory.hero.lede}</p>
         <div className="operational-hero__actions">
-          <a className="button button--amber" href="#formulario">{operationalStory.hero.primaryCta}</a>
-          <a className="text-link text-link--light" href="#prova">{operationalStory.hero.secondaryCta} <span aria-hidden="true">↓</span></a>
+          <a className="button button--amber" href="#contato">{operationalStory.hero.primaryCta}</a>
+          <a className="text-link text-link--light" href="#como-funciona">
+            {operationalStory.hero.secondaryCta} <span aria-hidden="true">↓</span>
+          </a>
         </div>
       </div>
     </section>
