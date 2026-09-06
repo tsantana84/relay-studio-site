@@ -11,7 +11,7 @@
     "build": "vinext build",
     "start": "vinext start --port 3001",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "test": "npm run build && node --test tests/rendered-html.test.mjs"
+    "test": "npm run build && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "react": "19.2.6",
