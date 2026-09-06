@@ -6,6 +6,10 @@ const source = await readFile(new URL("../app/content/site-content.ts", import.m
 const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
 const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const pageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+const conversionSource = await readFile(
+  new URL("../app/components/conversion-handoff.tsx", import.meta.url),
+  "utf8",
+).catch(() => "");
 const heroSource = await readFile(new URL("../app/components/operational-hero.tsx", import.meta.url), "utf8");
 const storySource = await readFile(new URL("../app/components/operational-story.tsx", import.meta.url), "utf8");
 const railSource = await readFile(new URL("../app/components/operational-rail.tsx", import.meta.url), "utf8");
@@ -40,12 +44,29 @@ test("a história explica cinco etapas sem métricas inventadas", () => {
   assert.match(storySource, /<ol[^>]*className="operational-story__chapters"/);
 });
 
-test("a página final conecta prova, contrato, limites e conversa", () => {
-  assert.match(pageSource, /<PilotContract \/>/);
-  assert.match(pageSource, /<FlowFormPreview \/>/);
-  assert.doesNotMatch(pageSource, /<DeliveryProof \/>/);
-  assert.match(source, /Escolher um fluxo delimitado/);
-  assert.match(source, /A fonte e a finalidade são autorizadas/);
+test("o piloto mede valor antes de ampliar", () => {
+  for (const step of ["Escolher", "Combinar", "Testar", "Decidir"]) {
+    assert.match(source, new RegExp(`title: "${step}"`));
+  }
+  assert.match(source, /comparamos o tempo, o custo e a qualidade/);
+  assert.match(source, /Frequência, prazo, critério de aceite e preço são definidos durante a avaliação do piloto/);
+  assert.doesNotMatch(source, /SLA, critério de aceite e cobrança continuam em validação/);
+});
+
+test("a conversão mostra três perguntas e abre diretamente o formulário real", () => {
+  for (const prompt of [
+    "Qual trabalho se repete",
+    "Com que frequência acontece",
+    "Onde ele consome tempo ou dinheiro",
+  ]) {
+    assert.match(source, new RegExp(prompt));
+  }
+  assert.match(conversionSource, /href={FORM_URL}/);
+  assert.match(conversionSource, /target="_blank"/);
+  assert.match(conversionSource, /rel="noreferrer"/);
+  assert.match(pageSource, /<ConversionHandoff \/>/);
+  assert.doesNotMatch(pageSource, /FlowFormPreview/);
+  assert.doesNotMatch(source, /Prévia local|Prévia sem envio|fields:/);
 });
 
 test("o sistema visual usa fontes locais e cores semânticas", () => {
@@ -116,7 +137,7 @@ test("os exemplos são concretos e aparecem com limite de evidência", () => {
   assert.match(useCasesSource, /aria-labelledby="use-cases-title"/);
 });
 
-test("formulário é curto, qualificável e não pede conteúdo operacional", () => {
+test("formulário externo mantém o contrato de qualificação e segurança", () => {
   for (const field of ["Nome e e-mail de trabalho", "Papel na operação", "Fluxo recorrente", "Frequência", "Fontes", "Resultado esperado", "Impacto hoje"]) {
     assert.match(formBrief, new RegExp(field));
   }
@@ -144,10 +165,10 @@ test("tipografia e texto editorial preservam legibilidade na superfície de pape
   assert.match(css, /\.operational-chapter\s*{[^}]*min-height:\s*72vh/);
 });
 
-test("o contrato usa limites horizontais e o sistema respeita movimento reduzido", () => {
+test("o contrato e o sistema respeitam os limites visuais e movimento reduzido", () => {
   assert.doesNotMatch(css, /border-left:\s*4px solid var\(--relay-exception\)/);
   assert.match(css, /\.operational-chapter\[data-stage="approval"\]\s*{[^}]*color:/);
-  assert.match(css, /\.pilot-contract__limits\s*{[^}]*border-top:\s*5px solid var\(--relay-exception\)/);
+  assert.doesNotMatch(css, /\.pilot-contract__limits/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?scroll-behavior:\s*auto/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?transition-duration:\s*0\.01ms/);
 });
@@ -165,7 +186,7 @@ test("o breakpoint compacto mantém texto e alvos interativos dentro do viewport
   assert.match(css, /\.contact h2\s*{[^}]*max-width:\s*10ch[^}]*font-size:\s*clamp\(2\.5rem,\s*5vw,\s*5\.5rem\)[^}]*overflow-wrap:\s*normal/);
   const compactCss = css.slice(css.indexOf("@media (max-width: 420px)"));
   assert.match(compactCss, /\.site-nav a[^}]*min-width:\s*44px/);
-  assert.match(compactCss, /\.flow-form-preview__confirmation input\s*{[^}]*width:\s*44px[^}]*height:\s*44px/);
+  assert.match(compactCss, /\.conversion-handoff \.button/);
   const mobileCss = css.slice(css.indexOf("@media (max-width: 620px)"));
   assert.match(mobileCss, /\.pilot-contract__steps h3\s*{[^}]*max-width:\s*14ch[^}]*font-variation-settings:\s*"wdth" 90[^}]*line-height:\s*1\.05/);
 });

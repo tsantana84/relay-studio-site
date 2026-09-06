@@ -14,9 +14,9 @@ npm run dev
 ```
 
 Abra `http://localhost:3001/`. O institucional não aponta para a landing de
-produto/parcerias. A única saída externa é a CTA para descrever um fluxo, que abre
-o formulário publicado no Google Forms; o formulário orienta a não enviar dados pessoais
-sensíveis.
+produto/parcerias. A única saída externa é a CTA para contar como funciona um trabalho recorrente.
+Ela abre diretamente o formulário publicado no Google Forms; a página orienta a
+não enviar dados pessoais sensíveis.
 
 ## Verificar
 

@@ -80,45 +80,28 @@ export const useCaseExamples = {
 } as const;
 
 export const pilotContract = {
-  title: "Começar pequeno é parte do método.",
+  title: "Comece por um trabalho. Prove o valor antes de ampliar.",
+  body: "Escolhemos com você uma tarefa recorrente, o resultado esperado e os limites da Relay. Rodamos um primeiro ciclo controlado e comparamos o tempo, o custo e a qualidade com a forma atual de trabalhar.",
   steps: [
-    { index: "01", title: "Escolher um fluxo delimitado", body: "Definir fontes, resultado, responsável e limite de ação." },
-    { index: "02", title: "Ensaiar um ciclo controlado", body: "Executar com dados autorizados e exceções visíveis." },
-    { index: "03", title: "Decidir com evidência", body: "Continuar, ajustar ou parar depois de conferir o resultado." },
+    { index: "01", title: "Escolher", body: "Um trabalho frequente e verificável." },
+    { index: "02", title: "Combinar", body: "Fontes, regras, responsáveis e limites." },
+    { index: "03", title: "Testar", body: "Executar um ciclo com acompanhamento." },
+    { index: "04", title: "Decidir", body: "Continuar, ajustar ou parar com base no resultado." },
   ],
-  limitsTitle: "O limite vem antes da execução.",
-  limits: [
-    "A fonte e a finalidade são autorizadas.",
-    "A exceção chega com contexto para uma pessoa responsável.",
-    "A ação externa depende da aprovação definida para o fluxo.",
-    "Resultado, decisão e pendências deixam registro.",
-  ],
-  maturity: "Frequência, SLA, critério de aceite e cobrança continuam em validação.",
-  productBoundary: "A demonstração explica a direção do produto; não representa uma operação de cliente.",
+  maturity: "Frequência, prazo, critério de aceite e preço são definidos durante a avaliação do piloto.",
 } as const;
 
 export const siteContent = {
   cta: {
-    eyebrow: "Começar por um fluxo",
-    title: "Qual trabalho recorrente ainda termina na sua equipe?",
-    body:
-      "Descreva o processo sem enviar dados pessoais sensíveis ou conteúdo operacional real. A conversa serve para avaliar se existe um piloto delimitado.",
-    action: "Descrever um fluxo",
-    externalNote: "O formulário abre no Google Forms.",
-  },
-  form: {
-    label: "Prévia local · nenhum dado é enviado",
-    safety:
-      "Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real.",
-    submit: "Prévia sem envio",
-    fields: [
-      { id: "contact", label: "Nome e e-mail de trabalho", kind: "text" },
-      { id: "role", label: "Papel na operação", kind: "select", options: ["Operações", "Financeiro", "Direção", "Tecnologia", "Outro"] },
-      { id: "flow", label: "Fluxo recorrente", kind: "textarea" },
-      { id: "frequency", label: "Frequência", kind: "select", options: ["Diário", "Semanal", "Quinzenal", "Mensal", "Outro ciclo previsível"] },
-      { id: "sources", label: "Fontes", kind: "textarea" },
-      { id: "result", label: "Resultado esperado", kind: "textarea" },
-      { id: "impact", label: "Impacto hoje", kind: "textarea" },
+    title: "Tem um trabalho repetitivo tomando o tempo da sua equipe?",
+    body: "Conte pra gente o que vocês repetem toda semana ou todo mês. Vamos avaliar se isso pode virar um primeiro piloto.",
+    prompts: [
+      "Qual trabalho se repete",
+      "Com que frequência acontece",
+      "Onde ele consome tempo ou dinheiro",
     ],
+    action: "Contar como funciona",
+    safety: "Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real.",
+    externalNote: "O formulário abre no Google Forms.",
   },
 } as const;

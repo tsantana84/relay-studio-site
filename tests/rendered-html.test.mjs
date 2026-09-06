@@ -18,18 +18,11 @@ function assertOperationalStory(html) {
     assert.ok(next > cursor, `${stage} deve vir depois do estágio anterior na lista semântica`);
     cursor = next;
   }
-  assert.match(html, /Uma tarefa entra\. Uma prova sai\./);
-  assert.match(html, /Demonstração sintética/);
-  assert.match(html, /não representa uma operação de cliente/);
-  assert.match(html, /Você entra quando importa/);
-  assert.match(html, /recibo sintético #014/);
-  assert.match(html, /id="formulario"/);
-  assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
-  assert.match(html, /operational-rail__branch operational-rail__branch--matched">179 correspondências/);
-  assert.match(html, /operational-rail__branch operational-rail__branch--exception">5 exceções/);
-  assert.match(html, /operational-rail__branch operational-rail__branch--approved">3 aprovados/);
-  assert.match(html, /operational-rail__branch operational-rail__branch--pending">2 devolvidos/);
-  assert.match(html, /operational-rail__receipt">Critério conferido · recibo sintético #014 · 182 encerrados · 2 pendentes/);
+  assert.match(html, /Do trabalho manual ao resultado entregue\./);
+  assert.match(html, /A Relay executa\. Sua equipe decide o que exige julgamento\./);
+  for (const label of ["preparado", "exceção", "aprovado", "devolvido"]) {
+    assert.match(html, new RegExp(`operational-rail__branch[^>]*>${label}`));
+  }
 }
 
 async function waitForServer(url, timeoutMs = 15_000) {
@@ -60,10 +53,10 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /<title>Relay Studio — execução operacional<\/title>/);
     assert.match(
       html,
-      /<meta name="description" content="A Relay avalia primeiros pilotos de execução operacional para transformar um fluxo recorrente em resultado, exceções e evidência\."\/>/,
+      /<meta name="description" content="A Relay executa trabalhos operacionais recorrentes, leva exceções para decisão da equipe e registra o resultado\."\/>/,
     );
     assert.match(html, /Relay Studio/);
-    const sections = ["top", "prova", "piloto", "contato"];
+    const sections = ["top", "como-funciona", "onde-comecar", "piloto", "contato"];
     let previous = -1;
     for (const section of sections) {
       const position = html.indexOf(`id="${section}"`);
@@ -71,35 +64,43 @@ test("home renderiza a presença institucional completa", async () => {
       previous = position;
     }
 
-    assert.match(html, /O trabalho anda\./);
-    const hero = html.slice(html.indexOf('id="top"'), html.indexOf('id="prova"'));
-    assert.match(hero, /Primeiros fluxos em validação/);
-    assert.match(html, /Começar pequeno é parte do método/);
-    assert.match(html, /O limite vem antes da execução/);
-    assert.match(html, /Qual trabalho recorrente ainda termina na sua equipe/);
-    assert.match(html, /href="#prova">Acompanhar uma entrega/);
-    assert.match(html, /href="#limites">Limites/);
-    assert.match(html, /id="limites"/);
-    assert.match(html, /id="formulario"/);
-    assert.match(html, /Prévia local · nenhum dado é enviado/);
-    assert.match(html, /Impacto hoje/);
-    assert.match(html, /Prévia sem envio/);
-    assert.match(html, /Confirmo que não enviei dados pessoais sensíveis, credenciais nem conteúdo operacional real\./);
-    assert.match(html, /target="_blank"/);
-    assert.match(html, /rel="noreferrer"/);
-    assert.match(html, /href="#formulario">Descrever um fluxo/);
-    const primaryCtaStart = html.indexOf('href="#formulario"');
-    const primaryCtaEnd = html.indexOf("</a>", primaryCtaStart);
-    const primaryCta = html.slice(primaryCtaStart, primaryCtaEnd);
-    assert.doesNotMatch(primaryCta, /↗/);
-    assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
+    assert.match(html, /Reduza o custo do trabalho recorrente sem perder o controle\./);
+    assert.match(html, /Primeiros pilotos em validação/);
+    for (const title of [
+      "Escolha um trabalho recorrente",
+      "A Relay prepara o trabalho",
+      "As exceções chegam à sua equipe",
+      "Só o que foi autorizado é executado",
+      "Você recebe o resultado e o registro",
+    ]) {
+      assert.match(html, new RegExp(title));
+    }
+    for (const example of [
+      "Conferir valores entre fontes",
+      "Preparar relatórios recorrentes",
+      "Acompanhar prazos e pendências",
+      "Atualizar sistemas depois de uma decisão",
+    ]) {
+      assert.match(html, new RegExp(example));
+    }
+    assert.match(html, /Comece por um trabalho\. Prove o valor antes de ampliar\./);
+    for (const step of ["Escolher", "Combinar", "Testar", "Decidir"]) {
+      assert.match(html, new RegExp(`>${step}<`));
+    }
+    assert.match(html, /Tem um trabalho repetitivo tomando o tempo da sua equipe\?/);
+    const contact = html.slice(html.indexOf('id="contato"'), html.indexOf("</section>", html.indexOf('id="contato"')));
+    assert.match(contact, /href="https:\/\/docs\.google\.com\/forms\/d\/e\//);
+    assert.match(contact, /target="_blank"/);
+    assert.match(contact, /rel="noreferrer"/);
+    assert.match(contact, /Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real\./);
+    assert.match(contact, /O formulário abre no Google Forms\./);
     assert.doesNotMatch(html, /id="audit"/);
     assert.doesNotMatch(html, /Forte candidato|Vale investigar|Ainda não é prioridade/);
     assertOperationalStory(html);
-    assert.match(html, /Frequência, SLA, critério de aceite e cobrança continuam em validação/);
-    assert.match(html, /enviar dados pessoais sensíveis/);
-    assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
-    assert.match(html, /O formulário abre no Google Forms/);
+    assert.match(html, /Frequência, prazo, critério de aceite e preço são definidos durante a avaliação do piloto\./);
+    for (const forbidden of ["184 pedidos", "179 correspondências", "recibo sintético #014", "Prévia local", "Prévia sem envio", "<form", 'id="formulario"']) {
+      assert.doesNotMatch(html, new RegExp(forbidden));
+    }
     assert.doesNotMatch(html, /localhost:3000/);
     assert.doesNotMatch(html, /#construir/);
     assert.doesNotMatch(html, /Construir junto/);
