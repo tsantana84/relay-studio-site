@@ -18,6 +18,7 @@ export default function OperationalHero() {
       <div className="operational-hero__content">
         <p className="eyebrow">{operationalStory.hero.kicker}</p>
         <h1 className="operational-hero__title" id="hero-title">{operationalStory.hero.title} <em>{operationalStory.hero.accent}</em></h1>
+        <p className="operational-hero__status">{operationalStory.hero.status}</p>
         <p className="operational-hero__lede">{operationalStory.hero.lede}</p>
         <div className="operational-hero__actions">
           <a className="button button--amber" href="#formulario">{operationalStory.hero.primaryCta}</a>

@@ -25,6 +25,11 @@ function assertOperationalStory(html) {
   assert.match(html, /recibo sintético #014/);
   assert.match(html, /id="formulario"/);
   assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
+  assert.match(html, /operational-rail__branch operational-rail__branch--matched">179 correspondências/);
+  assert.match(html, /operational-rail__branch operational-rail__branch--exception">5 exceções/);
+  assert.match(html, /operational-rail__branch operational-rail__branch--approved">3 aprovados/);
+  assert.match(html, /operational-rail__branch operational-rail__branch--pending">2 devolvidos/);
+  assert.match(html, /operational-rail__receipt">Critério conferido · recibo sintético #014 · 182 encerrados · 2 pendentes/);
 }
 
 async function waitForServer(url, timeoutMs = 15_000) {
@@ -67,6 +72,8 @@ test("home renderiza a presença institucional completa", async () => {
     }
 
     assert.match(html, /O trabalho anda\./);
+    const hero = html.slice(html.indexOf('id="top"'), html.indexOf('id="prova"'));
+    assert.match(hero, /Primeiros fluxos em validação/);
     assert.match(html, /Começar pequeno é parte do método/);
     assert.match(html, /O limite vem antes da execução/);
     assert.match(html, /Qual trabalho recorrente ainda termina na sua equipe/);

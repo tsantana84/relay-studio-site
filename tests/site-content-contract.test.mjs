@@ -6,7 +6,10 @@ const source = await readFile(new URL("../app/content/site-content.ts", import.m
 const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
 const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const pageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+const heroSource = await readFile(new URL("../app/components/operational-hero.tsx", import.meta.url), "utf8");
 const storySource = await readFile(new URL("../app/components/operational-story.tsx", import.meta.url), "utf8");
+const railSource = await readFile(new URL("../app/components/operational-rail.tsx", import.meta.url), "utf8");
+const manifestoSource = await readFile(new URL("../app/components/manifesto-cut.tsx", import.meta.url), "utf8");
 const layoutSource = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
 const fontsCss = await readFile(new URL("../public/fonts/fonts.css", import.meta.url), "utf8");
 const motion = await readFile(new URL("../app/components/operational-story-motion.tsx", import.meta.url), "utf8");
@@ -52,6 +55,31 @@ test("copy posiciona uma entrega delimitada sem transformar hipótese em capacid
   assert.match(source, /Demonstração sintética/);
   assert.match(source, /Descrever um fluxo/);
   assert.doesNotMatch(source, /garantimos|autônom[oa]|qualquer empresa|em produção/i);
+});
+
+test("o hero mantém a maturidade junto da promessa", () => {
+  assert.match(source, /status: "Primeiros fluxos em validação"/);
+  assert.match(heroSource, /operationalStory\.hero\.status/);
+});
+
+test("o manifesto move conteúdo interno sem deslocar sua caixa", () => {
+  assert.match(manifestoSource, /className="manifesto-cut__text"/);
+  const enhancedCss = css.slice(css.indexOf("@media (min-width: 769px) and (prefers-reduced-motion: no-preference)"));
+  assert.doesNotMatch(enhancedCss, /\.manifesto-cut\s*{[^}]*transform:/);
+  assert.match(enhancedCss, /\.manifesto-cut__text\s*{[^}]*transform:/);
+});
+
+test("o trilho deriva ramificações e recibo do conteúdo central", () => {
+  for (const literal of ["179 correspondências", "5 exceções", "3 aprovados", "2 devolvidos", "recibo sintético #014"]) {
+    assert.doesNotMatch(railSource, new RegExp(literal));
+  }
+  assert.match(railSource, /chapter\.stage === "preparation"/);
+  assert.match(railSource, /chapter\.stage === "approval"/);
+  assert.match(railSource, /chapter\.stage === "result"/);
+  assert.match(railSource, /operational-rail__branch--pending/);
+  assert.match(css, /\[data-active-stage="approval"\][^}]*--rail-progress:/);
+  assert.match(css, /\[data-active-stage="execution"\][\s\S]*?operational-rail__branch--approved[^}]*scaleY\(1\)/);
+  assert.match(css, /\[data-active-stage="result"\][\s\S]*?operational-rail__branch-group[^}]*opacity:\s*1/);
 });
 
 test("formulário é curto, qualificável e não pede conteúdo operacional", () => {

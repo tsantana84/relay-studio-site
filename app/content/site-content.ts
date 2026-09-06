@@ -6,6 +6,7 @@ export const operationalStory = {
     kicker: "Um fluxo delimitado",
     title: "O trabalho anda.",
     accent: "Você entra quando importa.",
+    status: "Primeiros fluxos em validação",
     lede: "A Relay prepara, separa exceções e executa apenas o que foi autorizado.",
     primaryCta: "Descrever um fluxo",
     secondaryCta: "Acompanhar uma entrega",
