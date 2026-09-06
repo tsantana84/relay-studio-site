@@ -40,7 +40,11 @@ export default function SiteMotion() {
 
     if (reduced.matches || !("IntersectionObserver" in window)) {
       revealAll();
-      return () => reduced.removeEventListener("change", handleReducedMotion);
+      return () => {
+        document.documentElement.removeAttribute("data-motion-ready");
+        revealAll();
+        reduced.removeEventListener("change", handleReducedMotion);
+      };
     }
 
     document.documentElement.setAttribute("data-motion-ready", "true");
@@ -57,6 +61,8 @@ export default function SiteMotion() {
 
     [...standalone, ...sequences].forEach((element) => observer.observe(element));
     return () => {
+      document.documentElement.removeAttribute("data-motion-ready");
+      revealAll();
       observer.disconnect();
       timers.forEach((timer) => window.clearTimeout(timer));
       reduced.removeEventListener("change", handleReducedMotion);

@@ -6,6 +6,7 @@ const source = await readFile(new URL("../app/content/site-content.ts", import.m
 const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
 const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const motion = await readFile(new URL("../app/components/site-motion.tsx", import.meta.url), "utf8");
+const pageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
 test("copy posiciona primeiros pilotos sem transformar hipótese em capacidade", () => {
   assert.match(source, /O trabalho recorrente termina\. Com evidência\./);
@@ -73,4 +74,13 @@ test("motion é progressivo e respeita preferência reduzida", () => {
   assert.match(motion, /data-motion-state/);
   assert.match(css, /html\[data-motion-ready="true"\]/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+});
+
+test("motion não deixa conteúdo oculto ao desmontar nem anima copy editorial", () => {
+  assert.match(
+    motion,
+    /return \(\) => \{[\s\S]*?document\.documentElement\.removeAttribute\("data-motion-ready"\)[\s\S]*?revealAll\(\)/,
+  );
+  assert.doesNotMatch(pageSource, /data-motion="reveal"/);
+  assert.doesNotMatch(css, /rotate\(/);
 });

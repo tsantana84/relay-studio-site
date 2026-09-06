@@ -296,19 +296,6 @@ html[data-motion-ready="true"] .delivery-ledger__row::before {
 
 html[data-motion-ready="true"] .delivery-ledger__row[data-motion-state="visible"]::before { transform: scaleY(1); }
 
-.delivery-ledger__row--result strong {
-  display: inline-block;
-  transform: none;
-  transition: none;
-}
-
-html[data-motion-ready="true"] .delivery-ledger__row--result strong {
-  transform: rotate(-2deg) translateY(10px);
-  transition: transform 540ms cubic-bezier(.2, .75, .2, 1) 180ms;
-}
-
-html[data-motion-ready="true"] .delivery-ledger__row--result[data-motion-state="visible"] strong { transform: rotate(-2deg) translateY(0); }
-
 .recognition,
 .pilot,
 .mechanism,
@@ -663,9 +650,7 @@ html[data-motion-ready="true"] .delivery-ledger__row--result[data-motion-state="
     transition: none;
   }
 
-  .delivery-ledger__row::before,
-  .delivery-ledger__row--result strong { transform: none; transition: none; }
+  .delivery-ledger__row::before { transform: none; transition: none; }
 
   html[data-motion-ready="true"] .delivery-ledger__row::before { transform: scaleY(1); transition: none; }
-  html[data-motion-ready="true"] .delivery-ledger__row--result strong { transform: none; transition: none; }
 }
