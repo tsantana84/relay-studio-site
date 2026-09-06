@@ -206,7 +206,9 @@ test("o breakpoint compacto mantém texto e alvos interativos dentro do viewport
   const compactCss = css.slice(css.indexOf("@media (max-width: 420px)"));
   assert.match(compactCss, /\.site-nav a[^}]*min-width:\s*44px/);
   assert.match(compactCss, /\.conversion-handoff \.button/);
-  const mobileCss = css.slice(css.indexOf("@media (max-width: 620px)"));
+  const mobileStart = css.indexOf("@media (max-width: 620px)");
+  const mobileEnd = css.indexOf("@media (max-width: 420px)");
+  const mobileCss = css.slice(mobileStart, mobileEnd);
   assert.match(mobileCss, /\.pilot-contract__steps h3\s*{[^}]*max-width:\s*14ch[^}]*font-variation-settings:\s*"wdth" 90[^}]*line-height:\s*1\.05/);
 });
 
@@ -222,9 +224,12 @@ test("o controlador suspende trabalho e preserva fallback", () => {
 });
 
 test("a abertura não cria overflow horizontal no viewport mobile", () => {
-  const mobileCss = css.slice(css.indexOf("@media (max-width: 620px)"));
+  const mobileStart = css.indexOf("@media (max-width: 620px)");
+  const mobileEnd = css.indexOf("@media (max-width: 420px)");
+  const mobileCss = css.slice(mobileStart, mobileEnd);
   assert.match(mobileCss, /\.operational-hero__topline\s*{[^}]*flex-wrap:\s*wrap/);
   assert.match(mobileCss, /\.site-nav\s*{[^}]*width:\s*100%[^}]*justify-content:\s*flex-start/);
   assert.match(mobileCss, /\.operational-hero__content\s*{[^}]*width:\s*100%[^}]*max-width:\s*100%/);
+  assert.match(mobileCss, /\.operational-hero h1\s*{[^}]*overflow-wrap:\s*break-word/);
   assert.match(mobileCss, /\.operational-hero__lede\s*{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*break-word/);
 });
