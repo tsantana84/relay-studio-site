@@ -37,9 +37,23 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /<html lang="pt-BR">/);
     assert.match(html, /<title>Relay Studio — execução operacional<\/title>/);
     assert.match(html, /Relay Studio/);
-    for (const section of ["fluxo-exemplo", "visao", "trabalho", "audit", "produto", "processo", "principios", "privacidade", "interesse"]) {
+    for (const section of ["visao", "trabalho", "audit", "produto", "processo", "principios", "privacidade", "interesse"]) {
       assert.match(html, new RegExp(`id="${section}"`));
     }
+    assert.match(html, /id="prova"/);
+    assert.match(html, /Demonstração sintética/);
+    assert.match(html, /Dados fictícios para demonstrar o percurso da entrega/);
+    const proofStart = html.indexOf('id="prova"');
+    const proofEnd = html.indexOf("</section>", proofStart);
+    const proof = html.slice(proofStart, proofEnd);
+    let stageCursor = -1;
+    for (const stage of ["source", "preparation", "approval", "execution", "result"]) {
+      const next = proof.indexOf(`data-stage="${stage}"`);
+      assert.ok(next > stageCursor, `${stage} deve vir depois do estágio anterior dentro de #prova`);
+      stageCursor = next;
+    }
+    assert.match(html, /recibo #014/);
+    assert.match(html, /Frequência, SLA, critério de aceite e cobrança continuam em validação/);
     assert.match(html, /SaaS de execução operacional/);
     assert.match(html, /Seu time decide/);
     assert.match(html, /A Relay executa/);
@@ -52,8 +66,6 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /Descrever este fluxo/);
     assert.match(html, /não envia suas respostas/);
     assert.match(html, /Fontes autorizadas/);
-    assert.match(html, /Uma reconciliação não precisa terminar na sua equipe/);
-    assert.match(html, /Frequência, SLA, critério de aceite e cobrança ainda estão em validação/);
     assert.match(html, /trabalhando na coisa certa/);
     assert.match(html, /direitos de acesso, exportação e/);
     assert.match(html, /Descrever um fluxo/);
