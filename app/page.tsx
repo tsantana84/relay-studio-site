@@ -1,5 +1,6 @@
 import DeliveryProof from "./components/delivery-proof";
 import FlowFormPreview from "./components/flow-form-preview";
+import SiteMotion from "./components/site-motion";
 import { siteContent } from "./content/site-content";
 
 export const dynamic = "force-static";
@@ -7,6 +8,7 @@ export const dynamic = "force-static";
 export default function HomePage() {
   return (
     <main>
+      <SiteMotion />
       <section className="hero" id="top" aria-labelledby="hero-title">
         <header className="hero__topline">
           <a className="wordmark" href="#top" aria-label="Relay Studio, início">
@@ -39,7 +41,7 @@ export default function HomePage() {
       </section>
       <DeliveryProof />
       <section className="recognition" id="trabalho" aria-labelledby="recognition-title">
-        <div className="section-intro">
+        <div className="section-intro" data-motion="reveal">
           <p className="eyebrow eyebrow--ink">{siteContent.recognition.eyebrow}</p>
           <h2 id="recognition-title">{siteContent.recognition.title}</h2>
           <p>{siteContent.recognition.body}</p>
@@ -55,13 +57,13 @@ export default function HomePage() {
         </div>
       </section>
       <section className="pilot" id="piloto" aria-labelledby="pilot-title">
-        <div className="section-intro">
+        <div className="section-intro" data-motion="reveal">
           <p className="eyebrow">{siteContent.pilot.eyebrow}</p>
           <h2 id="pilot-title">{siteContent.pilot.title}</h2>
         </div>
-        <ol className="pilot__stages">
+        <ol className="pilot__stages" data-motion-sequence="pilot">
           {siteContent.pilot.stages.map((stage, index) => (
-            <li key={stage.title}>
+            <li data-motion="stage" key={stage.title}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <h3>{stage.title}</h3>
               <p>{stage.body}</p>
@@ -71,14 +73,14 @@ export default function HomePage() {
         <p className="section-note section-note--light">{siteContent.pilot.note}</p>
       </section>
       <section className="mechanism" id="mecanismo" aria-labelledby="mechanism-title">
-        <div className="section-intro">
+        <div className="section-intro" data-motion="reveal">
           <p className="eyebrow eyebrow--ink">{siteContent.mechanism.eyebrow}</p>
           <h2 id="mechanism-title">{siteContent.mechanism.title}</h2>
           <p>{siteContent.mechanism.body}</p>
         </div>
-        <ol className="mechanism__rail" aria-label="Ordem de execução governada">
+        <ol className="mechanism__rail" data-motion-sequence="mechanism" aria-label="Ordem de execução governada">
           {siteContent.mechanism.stages.map((stage, index) => (
-            <li data-stage={stage.stage} key={stage.stage}>
+            <li data-motion="stage" data-stage={stage.stage} key={stage.stage}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <strong>{stage.title}</strong>
             </li>
@@ -86,7 +88,7 @@ export default function HomePage() {
         </ol>
       </section>
       <section className="limits" id="limites" aria-labelledby="limits-title">
-        <div className="section-intro">
+        <div className="section-intro" data-motion="reveal">
           <p className="eyebrow eyebrow--ink">{siteContent.limits.eyebrow}</p>
           <h2 id="limits-title">{siteContent.limits.title}</h2>
         </div>
@@ -96,7 +98,7 @@ export default function HomePage() {
         <p className="limits__note">{siteContent.limits.note}</p>
       </section>
       <section className="contact" id="contato" aria-labelledby="contact-title">
-        <div className="contact__body">
+        <div className="contact__body" data-motion="reveal">
           <p className="eyebrow">{siteContent.cta.eyebrow}</p>
           <h2 id="contact-title">{siteContent.cta.title}</h2>
           <p>{siteContent.cta.body}</p>

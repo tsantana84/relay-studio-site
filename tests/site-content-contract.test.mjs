@@ -5,6 +5,7 @@ import { test } from "node:test";
 const source = await readFile(new URL("../app/content/site-content.ts", import.meta.url), "utf8");
 const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
 const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+const motion = await readFile(new URL("../app/components/site-motion.tsx", import.meta.url), "utf8");
 
 test("copy posiciona primeiros pilotos sem transformar hipótese em capacidade", () => {
   assert.match(source, /O trabalho recorrente termina\. Com evidência\./);
@@ -63,4 +64,13 @@ test("exceções usam limites horizontais e o sistema respeita movimento reduzid
   assert.match(css, /\.limits__note\s*{[^}]*border-top:\s*4px solid var\(--relay-clay\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?scroll-behavior:\s*auto/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?transition-duration:\s*0\.01ms/);
+});
+
+test("motion é progressivo e respeita preferência reduzida", () => {
+  assert.match(motion, /prefers-reduced-motion: reduce/);
+  assert.match(motion, /IntersectionObserver/);
+  assert.match(motion, /addEventListener\("change"/);
+  assert.match(motion, /data-motion-state/);
+  assert.match(css, /html\[data-motion-ready="true"\]/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
