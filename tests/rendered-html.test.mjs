@@ -36,6 +36,10 @@ test("home renderiza a presença institucional completa", async () => {
 
     assert.match(html, /<html lang="pt-BR">/);
     assert.match(html, /<title>Relay Studio — execução operacional<\/title>/);
+    assert.match(
+      html,
+      /<meta name="description" content="A Relay avalia primeiros pilotos de execução operacional para transformar um fluxo recorrente em resultado, exceções e evidência\."\/>/,
+    );
     assert.match(html, /Relay Studio/);
     const sections = ["top", "prova", "trabalho", "piloto", "mecanismo", "limites", "contato"];
     let previous = -1;
