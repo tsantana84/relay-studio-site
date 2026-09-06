@@ -37,7 +37,7 @@ The chosen approach is a scroll-controlled operational film. Independent section
 
 ### Opening: recognition
 
-The opening establishes one idea at extreme scale: recurring work should move without hiding responsibility. A short entrance of at most 700 ms resolves the wordmark, headline, and initial task signal. Interaction is never blocked.
+The opening establishes one idea at extreme scale: recurring work should move without hiding responsibility. A short entrance of at most 700 ms resolves the wordmark, headline, and initial task signal. Interaction is never blocked. “Primeiros fluxos em validação” remains adjacent to the promise.
 
 The hero must not use a generic centered headline, product metric, or decorative dashboard. It introduces the same task that continues through the rest of the page.
 
@@ -61,7 +61,7 @@ Only the approved branch crosses the gate. The two returned items remain visibly
 
 ### Chapter 5: result and receipt
 
-The rail resolves into 182 closed items, two pending items, and synthetic receipt `#014`. The receipt is a semantic result summary, not decorative paper.
+The rail resolves into 182 closed items, two pending items, and synthetic receipt `#014`. The receipt is a semantic result summary, not decorative paper. The page states beside this evidence that the demonstration explains product direction and does not represent a customer operation.
 
 The second manifesto cut closes the sequence: **“Sem caixa-preta. Sem teatro. Com responsabilidade.”**
 
@@ -80,8 +80,8 @@ The limits remain adjacent to this contract. The final question — “Qual trab
 
 ### Typography
 
-- Use a self-hosted, Latin-subset variable display face with meaningful width and weight axes. The approved direction uses **Anybody** for large headlines and manifesto cuts.
-- Use **Geologica** for body and operational labels if the combined subset stays within the font budget. If it does not, retain the native body stack and reserve the distinctive face for display.
+- Use a self-hosted Latin WOFF2 variable display face with meaningful width and weight axes. The approved direction uses **Anybody** for large headlines and manifesto cuts.
+- Use a self-hosted Latin WOFF2 build of **Geologica** for body and operational labels if the cold-cache transfer stays within the font budget. If it does not, retain the native body stack and reserve the distinctive face for display.
 - Animate type width only in the signature sequence. Body copy never changes shape while being read.
 - Preserve readable line lengths and strong size contrast. Small operational labels remain concise rather than becoming repeated section eyebrows.
 
@@ -122,14 +122,14 @@ Use natural deceleration curves. Feedback stays within 100–300 ms, layout tran
 
 ### Server-rendered structure
 
-`app/page.tsx` remains a static route. It composes semantic server-rendered chapters so the story, proof, limits, and form are complete before client JavaScript runs.
+`app/page.tsx` remains a static route. It composes semantic server-rendered chapters so the story, proof, limits, and form are complete before client JavaScript runs. The story contains an always-readable ordered list and a sibling decorative stage; the stage is never the only carrier of evidence.
 
 `app/content/site-content.ts` becomes the single source for the narrative copy and synthetic figures. Existing evidence boundaries and form safety text remain explicit.
 
 ### Components
 
 - `OperationalHero`: wordmark, proposition, task signal, and entry actions.
-- `OperationalStory`: semantic ordered chapters for source, preparation, approval, execution, and receipt.
+- `OperationalStory`: semantic ordered chapters for source, preparation, approval, execution, and receipt, plus a sibling visual stage inside one scroll wrapper.
 - `OperationalRail`: presentational rail, branches, gates, and state labels. It consumes progress through CSS custom properties and does not own business copy.
 - `ManifestoCut`: the two deliberate typographic interruptions.
 - `PilotContract`: pilot steps and limits in one compact sequence.
@@ -144,18 +144,19 @@ Use platform APIs rather than adding an animation dependency:
 
 - passive scroll and resize listeners;
 - one `requestAnimationFrame` update at a time;
-- measured story bounds cached until resize;
-- normalized overall and per-chapter progress written to CSS custom properties;
+- document-space bounds for each semantic chapter, invalidated on resize and after fonts load;
+- normalized overall and per-chapter progress derived from the chapter containing a viewport anchor and written to CSS custom properties;
 - `IntersectionObserver` to suspend work when the story is outside the viewport.
 
-No layout-driving property is animated casually. Sticky positioning establishes the stage; transforms, masks, and font axes render progress.
+No layout-driving property is animated casually. On enhanced desktop only, sticky positioning establishes the decorative stage; transforms, masks, and font axes render progress. Mobile, reduced-motion, missing-observer, and no-JavaScript modes remain in normal document flow.
 
 ### Failure and fallback behavior
 
 - Without JavaScript, every chapter renders in document order with its final readable state.
 - With `prefers-reduced-motion: reduce`, sticky choreography is disabled and all chapters render as a static vertical narrative.
 - If the display font fails, the fallback stack preserves line breaks and avoids overlap.
-- If `IntersectionObserver` is unavailable, the controller keeps the static complete state.
+- If `IntersectionObserver` is unavailable, the controller does not enable enhancement and keeps the static complete state.
+- Scroll scheduling stops while the story is offscreen or reduced motion is active, and all controller-owned state is removed during cleanup.
 - The Google Forms handoff remains an explicit external link; the local preview sends no data.
 
 ## Accessibility and responsive behavior
@@ -171,8 +172,8 @@ No layout-driving property is animated casually. Sticky positioning establishes 
 ## Performance budget
 
 - No general-purpose animation library.
-- Self-hosted font assets must be subset and preloaded only when used above the fold.
-- Total new font transfer should remain below 180 KB compressed; otherwise retain the native body stack.
+- Self-hosted font assets must contain only the required Latin glyph range. Preload only the display face used above the fold.
+- Total new font transfer on a cold-cache Portuguese page load should remain below 180 KB compressed; emitted but unrequested subsets do not count toward this budget.
 - The controller performs at most one visual update per animation frame and stops when offscreen.
 - Expensive blur and shadow effects remain bounded to isolated elements.
 
