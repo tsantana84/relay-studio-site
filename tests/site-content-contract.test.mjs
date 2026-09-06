@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 
 const source = await readFile(new URL("../app/content/site-content.ts", import.meta.url), "utf8");
+const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
 
 test("copy posiciona primeiros pilotos sem transformar hipótese em capacidade", () => {
   assert.match(source, /O trabalho recorrente termina\. Com evidência\./);
@@ -23,4 +24,13 @@ test("prova preserva a ordem de autorização", () => {
   }
   assert.match(source, /Dados fictícios/);
   assert.match(source, /recibo #014/);
+});
+
+test("formulário é curto, qualificável e não pede conteúdo operacional", () => {
+  for (const field of ["Nome e e-mail de trabalho", "Papel na operação", "Fluxo recorrente", "Frequência", "Fontes", "Resultado esperado", "Impacto hoje"]) {
+    assert.match(formBrief, new RegExp(field));
+  }
+  assert.match(formBrief, /não envie dados pessoais sensíveis/i);
+  assert.match(formBrief, /não classificar automaticamente/i);
+  assert.doesNotMatch(formBrief, /anexar|upload|senha|token/i);
 });

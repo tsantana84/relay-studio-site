@@ -56,6 +56,16 @@ test("home renderiza a presença institucional completa", async () => {
     assert.match(html, /Antes de executar, o limite precisa estar claro/);
     assert.match(html, /Qual trabalho recorrente ainda termina na sua equipe/);
     assert.match(html, /href="#prova">Ver uma entrega/);
+    assert.match(html, /id="formulario"/);
+    assert.match(html, /Prévia local · nenhum dado é enviado/);
+    assert.match(html, /Impacto hoje/);
+    assert.match(html, /Prévia sem envio/);
+    assert.match(html, /Confirmo que não enviei dados pessoais sensíveis, credenciais nem conteúdo operacional real\./);
+    assert.match(html, /href="#formulario">Descrever um fluxo/);
+    const primaryCtaStart = html.indexOf('href="#formulario"');
+    const primaryCtaEnd = html.indexOf("</a>", primaryCtaStart);
+    const primaryCta = html.slice(primaryCtaStart, primaryCtaEnd);
+    assert.doesNotMatch(primaryCta, /↗/);
     assert.match(html, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
     assert.doesNotMatch(html, /id="audit"/);
     assert.doesNotMatch(html, /Forte candidato|Vale investigar|Ainda não é prioridade/);
