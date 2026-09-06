@@ -1,9 +1,9 @@
-import FlowFormPreview from "./components/flow-form-preview";
+import ConversionHandoff from "./components/conversion-handoff";
 import OperationalHero from "./components/operational-hero";
 import OperationalStoryMotion from "./components/operational-story-motion";
 import OperationalStory from "./components/operational-story";
 import PilotContract from "./components/pilot-contract";
-import { siteContent } from "./content/site-content";
+import UseCaseExamples from "./components/use-case-examples";
 
 export const dynamic = "force-static";
 
@@ -13,15 +13,9 @@ export default function HomePage() {
       <OperationalHero />
       <OperationalStory />
       <OperationalStoryMotion />
+      <UseCaseExamples />
       <PilotContract />
-      <section className="contact" id="contato" aria-labelledby="contact-title">
-        <div className="contact__body">
-          <p className="eyebrow">{siteContent.cta.eyebrow}</p>
-          <h2 id="contact-title">{siteContent.cta.title}</h2>
-          <p>{siteContent.cta.body}</p>
-        </div>
-        <FlowFormPreview />
-      </section>
+      <ConversionHandoff />
       <footer className="site-footer">
         <a className="wordmark wordmark--dark" href="#top" aria-label="Relay Studio, início">
           {/* eslint-disable-next-line @next/next/no-img-element */}

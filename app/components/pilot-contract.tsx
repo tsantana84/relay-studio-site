@@ -5,8 +5,7 @@ export default function PilotContract() {
     <section className="pilot-contract" id="piloto" aria-labelledby="pilot-title">
       <div className="pilot-contract__intro">
         <h2 id="pilot-title">{pilotContract.title}</h2>
-        <p>{pilotContract.maturity}</p>
-        <p>{pilotContract.productBoundary}</p>
+        <p>{pilotContract.body}</p>
       </div>
       <ol className="pilot-contract__steps">
         {pilotContract.steps.map((step) => (
@@ -17,12 +16,7 @@ export default function PilotContract() {
           </li>
         ))}
       </ol>
-      <div className="pilot-contract__limits" id="limites">
-        <h3>{pilotContract.limitsTitle}</h3>
-        <ul>
-          {pilotContract.limits.map((limit) => <li key={limit}>{limit}</li>)}
-        </ul>
-      </div>
+      <p className="pilot-contract__maturity">{pilotContract.maturity}</p>
     </section>
   );
 }

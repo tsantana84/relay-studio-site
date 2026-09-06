@@ -2,17 +2,20 @@ type Chapter = {
   readonly index: string;
   readonly verb: string;
   readonly stage: string;
-  readonly value: string;
-  readonly detail: string;
 };
 
-export default function OperationalRail({ chapters }: { chapters: readonly Chapter[] }) {
-  const preparation = chapters.find((chapter) => chapter.stage === "preparation");
-  const approval = chapters.find((chapter) => chapter.stage === "approval");
-  const result = chapters.find((chapter) => chapter.stage === "result");
-  const [matched, exceptions] = preparation?.value.split(" · ") ?? [];
-  const [approved, pending] = approval?.value.split(" · ") ?? [];
-  const receipt = result ? `${result.detail.replace(/\.$/, "")} · ${result.value}` : "";
+type RailStates = {
+  readonly preparation: { readonly prepared: string; readonly exception: string };
+  readonly approval: { readonly approved: string; readonly returned: string };
+};
+
+export default function OperationalRail({
+  chapters,
+  railStates,
+}: {
+  chapters: readonly Chapter[];
+  railStates: RailStates;
+}) {
 
   return (
     <div className="operational-rail" data-story-rail>
@@ -28,15 +31,22 @@ export default function OperationalRail({ chapters }: { chapters: readonly Chapt
       </ol>
       <div className="operational-rail__branches">
         <div className="operational-rail__branch-group operational-rail__branch-group--preparation">
-          <span className="operational-rail__branch operational-rail__branch--matched">{matched}</span>
-          <span className="operational-rail__branch operational-rail__branch--exception">{exceptions}</span>
+          <span className="operational-rail__branch operational-rail__branch--prepared">
+            {railStates.preparation.prepared}
+          </span>
+          <span className="operational-rail__branch operational-rail__branch--exception">
+            {railStates.preparation.exception}
+          </span>
         </div>
         <div className="operational-rail__branch-group operational-rail__branch-group--approval">
-          <span className="operational-rail__branch operational-rail__branch--approved">{approved}</span>
-          <span className="operational-rail__branch operational-rail__branch--pending">{pending}</span>
+          <span className="operational-rail__branch operational-rail__branch--approved">
+            {railStates.approval.approved}
+          </span>
+          <span className="operational-rail__branch operational-rail__branch--returned">
+            {railStates.approval.returned}
+          </span>
         </div>
       </div>
-      <p className="operational-rail__receipt">{receipt}</p>
     </div>
   );
 }

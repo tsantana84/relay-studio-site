@@ -3,69 +3,114 @@ export const FORM_URL =
 
 export const operationalStory = {
   hero: {
-    kicker: "Um fluxo delimitado",
-    title: "O trabalho anda.",
-    accent: "Você entra quando importa.",
-    status: "Primeiros fluxos em validação",
-    lede: "A Relay prepara, separa exceções e executa apenas o que foi autorizado.",
-    primaryCta: "Descrever um fluxo",
-    secondaryCta: "Acompanhar uma entrega",
+    kicker: "SOFTWARE PARA EXECUÇÃO OPERACIONAL",
+    title: "Reduza o custo do trabalho recorrente sem perder o controle.",
+    status: "Primeiros pilotos em validação",
+    lede: "A Relay executa etapas manuais e repetitivas, leva as exceções para sua equipe decidir e registra o resultado.",
+    primaryCta: "Mostrar um trabalho recorrente",
+    secondaryCta: "Entender como funciona",
   },
-  disclosure: "Demonstração sintética · dados fictícios para explicar o percurso da entrega.",
-  productBoundary: "Esta demonstração explica a direção do produto; não representa uma operação de cliente.",
+  title: "Do trabalho manual ao resultado entregue.",
   chapters: [
-    { stage: "source", index: "01", verb: "Entra", title: "O trabalho que volta toda semana.", value: "184 pedidos · 184 repasses", detail: "Duas fontes autorizadas entram no ensaio." },
-    { stage: "preparation", index: "02", verb: "Separa", title: "O sistema encontra o que não fecha.", value: "179 correspondências · 5 exceções", detail: "Nenhuma ação externa foi tomada." },
-    { stage: "approval", index: "03", verb: "Para", title: "A automação sabe onde parar.", value: "3 aprovados · 2 devolvidos", detail: "A decisão do responsável fica registrada." },
-    { stage: "execution", index: "04", verb: "Executa", title: "Só o autorizado atravessa.", value: "3 ajustes aplicados", detail: "Os dois itens devolvidos permanecem pendentes." },
-    { stage: "result", index: "05", verb: "Prova", title: "O fim deixa evidência.", value: "182 encerrados · 2 pendentes", detail: "Critério conferido · recibo sintético #014." },
+    {
+      stage: "source",
+      index: "01",
+      verb: "Escolher",
+      title: "Escolha um trabalho recorrente",
+      detail: "Começamos por uma tarefa manual, frequente e com resultado verificável.",
+    },
+    {
+      stage: "preparation",
+      index: "02",
+      verb: "Preparar",
+      title: "A Relay prepara o trabalho",
+      detail: "Reúne informações de fontes autorizadas e aplica as regras combinadas.",
+    },
+    {
+      stage: "approval",
+      index: "03",
+      verb: "Decidir",
+      title: "As exceções chegam à sua equipe",
+      detail: "O que exige julgamento humano para. A pessoa responsável decide como seguir.",
+    },
+    {
+      stage: "execution",
+      index: "04",
+      verb: "Executar",
+      title: "Só o que foi autorizado é executado",
+      detail: "A Relay conclui as etapas aprovadas e mantém o restante pendente.",
+    },
+    {
+      stage: "result",
+      index: "05",
+      verb: "Registrar",
+      title: "Você recebe o resultado e o registro",
+      detail: "Fica claro o que foi concluído, o que continua pendente e quais decisões foram tomadas.",
+    },
   ],
-  manifesto: {
-    decision: "Você entra quando importa.",
-    closing: "Sem caixa-preta. Sem teatro. Com responsabilidade.",
+  railStates: {
+    preparation: { prepared: "preparado", exception: "exceção" },
+    approval: { approved: "aprovado", returned: "devolvido" },
   },
+  impact: "A Relay executa. Sua equipe decide o que exige julgamento.",
+} as const;
+
+export const siteNavigation = {
+  items: [
+    { label: "Como funciona", href: "#como-funciona" },
+    { label: "Onde começar", href: "#onde-comecar" },
+    { label: "Piloto", href: "#piloto" },
+  ],
+  action: { label: operationalStory.hero.primaryCta, href: "#contato" },
+} as const;
+
+export const useCaseExamples = {
+  title: "Que trabalho está consumindo tempo demais?",
+  intro: "Alguns exemplos que podemos avaliar com você:",
+  items: [
+    {
+      title: "Conferir valores entre fontes",
+      body: "Comparar pedidos, pagamentos, repasses ou cobranças e separar o que precisa de atenção.",
+    },
+    {
+      title: "Preparar relatórios recorrentes",
+      body: "Reunir informações, aplicar regras combinadas e deixar o resultado pronto para revisão.",
+    },
+    {
+      title: "Acompanhar prazos e pendências",
+      body: "Identificar o que está atrasado, avisar as pessoas responsáveis e manter o acompanhamento organizado.",
+    },
+    {
+      title: "Atualizar sistemas depois de uma decisão",
+      body: "Executar as etapas aprovadas e registrar o que foi feito e o que continua pendente.",
+    },
+  ],
+  boundary: "Estes são exemplos de trabalhos que podemos avaliar para um piloto. Não são soluções prontas nem resultados comprovados de clientes.",
 } as const;
 
 export const pilotContract = {
-  title: "Começar pequeno é parte do método.",
+  title: "Comece por um trabalho. Prove o valor antes de ampliar.",
+  body: "Escolhemos com você uma tarefa recorrente, o resultado esperado e os limites da Relay. Rodamos um primeiro ciclo controlado e comparamos o tempo, o custo e a qualidade com a forma atual de trabalhar.",
   steps: [
-    { index: "01", title: "Escolher um fluxo delimitado", body: "Definir fontes, resultado, responsável e limite de ação." },
-    { index: "02", title: "Ensaiar um ciclo controlado", body: "Executar com dados autorizados e exceções visíveis." },
-    { index: "03", title: "Decidir com evidência", body: "Continuar, ajustar ou parar depois de conferir o resultado." },
+    { index: "01", title: "Escolher", body: "Um trabalho frequente e verificável." },
+    { index: "02", title: "Combinar", body: "Fontes, regras, responsáveis e limites." },
+    { index: "03", title: "Testar", body: "Executar um ciclo com acompanhamento." },
+    { index: "04", title: "Decidir", body: "Continuar, ajustar ou parar com base no resultado." },
   ],
-  limitsTitle: "O limite vem antes da execução.",
-  limits: [
-    "A fonte e a finalidade são autorizadas.",
-    "A exceção chega com contexto para uma pessoa responsável.",
-    "A ação externa depende da aprovação definida para o fluxo.",
-    "Resultado, decisão e pendências deixam registro.",
-  ],
-  maturity: "Frequência, SLA, critério de aceite e cobrança continuam em validação.",
-  productBoundary: "A demonstração explica a direção do produto; não representa uma operação de cliente.",
+  maturity: "Frequência, prazo, critério de aceite e preço são definidos durante a avaliação do piloto.",
 } as const;
 
 export const siteContent = {
   cta: {
-    eyebrow: "Começar por um fluxo",
-    title: "Qual trabalho recorrente ainda termina na sua equipe?",
-    body:
-      "Descreva o processo sem enviar dados pessoais sensíveis ou conteúdo operacional real. A conversa serve para avaliar se existe um piloto delimitado.",
-    action: "Descrever um fluxo",
-    externalNote: "O formulário abre no Google Forms.",
-  },
-  form: {
-    label: "Prévia local · nenhum dado é enviado",
-    safety:
-      "Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real.",
-    submit: "Prévia sem envio",
-    fields: [
-      { id: "contact", label: "Nome e e-mail de trabalho", kind: "text" },
-      { id: "role", label: "Papel na operação", kind: "select", options: ["Operações", "Financeiro", "Direção", "Tecnologia", "Outro"] },
-      { id: "flow", label: "Fluxo recorrente", kind: "textarea" },
-      { id: "frequency", label: "Frequência", kind: "select", options: ["Diário", "Semanal", "Quinzenal", "Mensal", "Outro ciclo previsível"] },
-      { id: "sources", label: "Fontes", kind: "textarea" },
-      { id: "result", label: "Resultado esperado", kind: "textarea" },
-      { id: "impact", label: "Impacto hoje", kind: "textarea" },
+    title: "Tem um trabalho repetitivo tomando o tempo da sua equipe?",
+    body: "Conte pra gente o que vocês repetem toda semana ou todo mês. Vamos avaliar se isso pode virar um primeiro piloto.",
+    prompts: [
+      "Qual trabalho se repete",
+      "Com que frequência acontece",
+      "Onde ele consome tempo ou dinheiro",
     ],
+    action: "Contar como funciona",
+    safety: "Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real.",
+    externalNote: "O formulário abre no Google Forms.",
   },
 } as const;

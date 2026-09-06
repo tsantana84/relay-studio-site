@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Relay Studio — execução operacional",
   description:
-    "A Relay avalia primeiros pilotos de execução operacional para transformar um fluxo recorrente em resultado, exceções e evidência.",
+    "A Relay executa trabalhos operacionais recorrentes, leva exceções para decisão da equipe e registra o resultado.",
   icons: {
     icon: "brand/relay-icon-dark.svg",
   },

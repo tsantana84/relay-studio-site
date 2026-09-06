@@ -2,6 +2,9 @@
 
 **Status:** contrato de conteúdo para revisão; não altera o Google Form publicado.
 
+A página institucional não replica estes campos. Ela antecipa somente trabalho,
+frequência e impacto e leva a pessoa diretamente ao formulário publicado.
+
 ## Abertura
 
 Descreva um único trabalho recorrente. Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real.
