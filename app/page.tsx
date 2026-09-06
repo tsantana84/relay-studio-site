@@ -1,6 +1,6 @@
-import DeliveryProof from "./components/delivery-proof";
 import FlowFormPreview from "./components/flow-form-preview";
-import SiteMotion from "./components/site-motion";
+import OperationalHero from "./components/operational-hero";
+import OperationalStory from "./components/operational-story";
 import { siteContent } from "./content/site-content";
 
 export const dynamic = "force-static";
@@ -8,38 +8,8 @@ export const dynamic = "force-static";
 export default function HomePage() {
   return (
     <main>
-      <SiteMotion />
-      <section className="hero" id="top" aria-labelledby="hero-title">
-        <header className="hero__topline">
-          <a className="wordmark" href="#top" aria-label="Relay Studio, início">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="brand/relay-icon-light.svg" alt="" width="28" height="28" />
-            <span>Relay Studio</span>
-          </a>
-          <nav className="site-nav" aria-label="Navegação principal">
-            <a href="#prova">Prova</a>
-            <a href="#piloto">Primeiro piloto</a>
-            <a href="#limites">Limites</a>
-          </nav>
-        </header>
-        <div className="hero__content">
-          <div className="hero__copy">
-            <p className="eyebrow">{siteContent.hero.eyebrow}</p>
-            <h1 id="hero-title">{siteContent.hero.title}</h1>
-            <p className="hero__lede">{siteContent.hero.lede}</p>
-            <div className="hero__actions">
-              <a className="button button--amber" href="#formulario">
-                {siteContent.hero.primaryCta}
-              </a>
-              <a className="text-link text-link--light" href="#prova">
-                {siteContent.hero.secondaryCta} <span aria-hidden="true">↓</span>
-              </a>
-            </div>
-          </div>
-          <p className="hero__note">{siteContent.hero.note}</p>
-        </div>
-      </section>
-      <DeliveryProof />
+      <OperationalHero />
+      <OperationalStory />
       <section className="recognition" id="trabalho" aria-labelledby="recognition-title">
         <div className="section-intro">
           <p className="eyebrow eyebrow--ink">{siteContent.recognition.eyebrow}</p>
