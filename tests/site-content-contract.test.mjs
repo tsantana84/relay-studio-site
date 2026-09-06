@@ -4,6 +4,7 @@ import { test } from "node:test";
 
 const source = await readFile(new URL("../app/content/site-content.ts", import.meta.url), "utf8");
 const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
+const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
 test("copy posiciona primeiros pilotos sem transformar hipótese em capacidade", () => {
   assert.match(source, /O trabalho recorrente termina\. Com evidência\./);
@@ -33,4 +34,33 @@ test("formulário é curto, qualificável e não pede conteúdo operacional", ()
   assert.match(formBrief, /não envie dados pessoais sensíveis/i);
   assert.match(formBrief, /não classificar automaticamente/i);
   assert.doesNotMatch(formBrief, /anexar|upload|senha|token/i);
+});
+
+test("sistema visual reserva cor para ação, exceção e evidência", () => {
+  assert.match(css, /--relay-clay\s*:/);
+  assert.match(css, /--relay-moss\s*:/);
+  assert.match(css, /\.delivery-ledger__row--approval/);
+  assert.match(css, /\.delivery-ledger__row--result/);
+  assert.match(css, /@media \(max-width: 620px\)/);
+  assert.match(css, /:focus-visible/);
+});
+
+test("tipografia e texto editorial preservam legibilidade na superfície de papel", () => {
+  const heroHeading = css.match(/\.hero h1\s*{([^}]*)}/)?.[1] ?? "";
+  assert.match(heroHeading, /font-size:\s*clamp\([^;]*,\s*6rem\)/);
+  assert.match(heroHeading, /letter-spacing:\s*-0\.04em/);
+  assert.match(css, /--relay-muted-ink\s*:/);
+  assert.match(css, /--relay-moss-ink\s*:/);
+  assert.match(css, /\.delivery-ledger__row p\s*{[^}]*color:\s*var\(--relay-muted-ink\)/);
+  assert.match(css, /\.delivery-ledger__row--result p\s*{[^}]*color:\s*var\(--relay-moss-ink\)/);
+  assert.match(css, /\.mechanism__rail li\[data-stage="result"\]\s*{[^}]*color:\s*var\(--relay-moss-ink\)/);
+});
+
+test("exceções usam limites horizontais e o sistema respeita movimento reduzido", () => {
+  assert.doesNotMatch(css, /border-left:\s*4px solid var\(--relay-clay\)/);
+  assert.match(css, /\.delivery-ledger__row--approval\s*{[^}]*background:/);
+  assert.match(css, /\.mechanism__rail li\[data-stage="approval"\]\s*{[^}]*background:/);
+  assert.match(css, /\.limits__note\s*{[^}]*border-top:\s*4px solid var\(--relay-clay\)/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?scroll-behavior:\s*auto/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?transition-duration:\s*0\.01ms/);
 });
