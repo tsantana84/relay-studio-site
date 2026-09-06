@@ -55,3 +55,12 @@ test("tipografia e texto editorial preservam legibilidade na superfície de pape
   assert.match(css, /\.delivery-ledger__row--result p\s*{[^}]*color:\s*var\(--relay-moss-ink\)/);
   assert.match(css, /\.mechanism__rail li\[data-stage="result"\]\s*{[^}]*color:\s*var\(--relay-moss-ink\)/);
 });
+
+test("exceções usam limites horizontais e o sistema respeita movimento reduzido", () => {
+  assert.doesNotMatch(css, /border-left:\s*4px solid var\(--relay-clay\)/);
+  assert.match(css, /\.delivery-ledger__row--approval\s*{[^}]*background:/);
+  assert.match(css, /\.mechanism__rail li\[data-stage="approval"\]\s*{[^}]*background:/);
+  assert.match(css, /\.limits__note\s*{[^}]*border-top:\s*4px solid var\(--relay-clay\)/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?scroll-behavior:\s*auto/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?transition-duration:\s*0\.01ms/);
+});
