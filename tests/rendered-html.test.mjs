@@ -58,7 +58,7 @@ test("home renderiza a presença institucional completa", async () => {
       /<meta name="description" content="A Relay avalia primeiros pilotos de execução operacional para transformar um fluxo recorrente em resultado, exceções e evidência\."\/>/,
     );
     assert.match(html, /Relay Studio/);
-    const sections = ["top", "prova", "trabalho", "piloto", "mecanismo", "limites", "contato"];
+    const sections = ["top", "prova", "piloto", "contato"];
     let previous = -1;
     for (const section of sections) {
       const position = html.indexOf(`id="${section}"`);
@@ -67,12 +67,12 @@ test("home renderiza a presença institucional completa", async () => {
     }
 
     assert.match(html, /O trabalho anda\./);
-    assert.match(html, /Começamos pelo que se repete, pesa e precisa fechar/);
     assert.match(html, /Começar pequeno é parte do método/);
-    assert.match(html, /A decisão humana vem antes da ação/);
-    assert.match(html, /Antes de executar, o limite precisa estar claro/);
+    assert.match(html, /O limite vem antes da execução/);
     assert.match(html, /Qual trabalho recorrente ainda termina na sua equipe/);
     assert.match(html, /href="#prova">Acompanhar uma entrega/);
+    assert.match(html, /href="#limites">Limites/);
+    assert.match(html, /id="limites"/);
     assert.match(html, /id="formulario"/);
     assert.match(html, /Prévia local · nenhum dado é enviado/);
     assert.match(html, /Impacto hoje/);

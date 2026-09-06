@@ -1,6 +1,7 @@
 import FlowFormPreview from "./components/flow-form-preview";
 import OperationalHero from "./components/operational-hero";
 import OperationalStory from "./components/operational-story";
+import PilotContract from "./components/pilot-contract";
 import { siteContent } from "./content/site-content";
 
 export const dynamic = "force-static";
@@ -10,63 +11,7 @@ export default function HomePage() {
     <main>
       <OperationalHero />
       <OperationalStory />
-      <section className="recognition" id="trabalho" aria-labelledby="recognition-title">
-        <div className="section-intro">
-          <p className="eyebrow eyebrow--ink">{siteContent.recognition.eyebrow}</p>
-          <h2 id="recognition-title">{siteContent.recognition.title}</h2>
-          <p>{siteContent.recognition.body}</p>
-        </div>
-        <div className="recognition__list">
-          {siteContent.recognition.items.map((item, index) => (
-            <article className="recognition__item" key={item.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="pilot" id="piloto" aria-labelledby="pilot-title">
-        <div className="section-intro">
-          <p className="eyebrow">{siteContent.pilot.eyebrow}</p>
-          <h2 id="pilot-title">{siteContent.pilot.title}</h2>
-        </div>
-        <ol className="pilot__stages" data-motion-sequence="pilot">
-          {siteContent.pilot.stages.map((stage, index) => (
-            <li data-motion="stage" key={stage.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{stage.title}</h3>
-              <p>{stage.body}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="section-note section-note--light">{siteContent.pilot.note}</p>
-      </section>
-      <section className="mechanism" id="mecanismo" aria-labelledby="mechanism-title">
-        <div className="section-intro">
-          <p className="eyebrow eyebrow--ink">{siteContent.mechanism.eyebrow}</p>
-          <h2 id="mechanism-title">{siteContent.mechanism.title}</h2>
-          <p>{siteContent.mechanism.body}</p>
-        </div>
-        <ol className="mechanism__rail" data-motion-sequence="mechanism" aria-label="Ordem de execução governada">
-          {siteContent.mechanism.stages.map((stage, index) => (
-            <li data-motion="stage" data-stage={stage.stage} key={stage.stage}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>{stage.title}</strong>
-            </li>
-          ))}
-        </ol>
-      </section>
-      <section className="limits" id="limites" aria-labelledby="limits-title">
-        <div className="section-intro">
-          <p className="eyebrow eyebrow--ink">{siteContent.limits.eyebrow}</p>
-          <h2 id="limits-title">{siteContent.limits.title}</h2>
-        </div>
-        <ul className="limits__list">
-          {siteContent.limits.items.map((item) => <li key={item}>{item}</li>)}
-        </ul>
-        <p className="limits__note">{siteContent.limits.note}</p>
-      </section>
+      <PilotContract />
       <section className="contact" id="contato" aria-labelledby="contact-title">
         <div className="contact__body">
           <p className="eyebrow">{siteContent.cta.eyebrow}</p>
