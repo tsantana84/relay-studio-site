@@ -34,10 +34,10 @@ GITHUB_PAGES_BASE_PATH=/nome-do-repositorio npm run build
 ```
 
 O build de publicação usa `output: "export"`. O workflow em
-`.github/workflows/deploy-pages.yml` calcula automaticamente o caminho base para um
-site de projeto (`/<repositório>`) ou para um site pessoal/organizacional
-(`<conta>.github.io`). No GitHub, selecione **Settings → Pages → GitHub Actions** como
-fonte de publicação.
+`.github/workflows/deploy-pages.yml` usa o `base_path` resolvido pelo GitHub Pages,
+cobrindo tanto sites de projeto (`/<repositório>`) quanto domínios personalizados e
+sites pessoais/organizacionais na raiz. No GitHub, selecione **Settings → Pages →
+GitHub Actions** como fonte de publicação.
 
 Durante o trabalho local, `public/brand` é um symlink para `../relay-studio-brand-kit`,
 a fonte canônica dos assets da marca. Como o GitHub Pages faz checkout apenas deste
