@@ -1,30 +1,40 @@
 import ConversionHandoff from "./components/conversion-handoff";
-import OperationalHero from "./components/operational-hero";
-import OperationalStoryMotion from "./components/operational-story-motion";
-import OperationalStory from "./components/operational-story";
+import Hero from "./components/hero";
+import HowItWorks from "./components/how-it-works";
+import Marquee from "./components/marquee";
+import { MotionRoot, RevealWords } from "./components/motion-kit";
 import PilotContract from "./components/pilot-contract";
+import SiteHeader from "./components/site-header";
+import SwapSection from "./components/swap-section";
 import UseCaseExamples from "./components/use-case-examples";
+import { footer, howItWorks } from "./content/site-content";
 
 export const dynamic = "force-static";
 
 export default function HomePage() {
   return (
-    <main>
-      <OperationalHero />
-      <OperationalStory />
-      <OperationalStoryMotion />
-      <UseCaseExamples />
-      <PilotContract />
-      <ConversionHandoff />
+    <MotionRoot>
+      <SiteHeader />
+      <main>
+        <Hero />
+        <SwapSection />
+        <HowItWorks />
+        <Marquee text={howItWorks.impact} />
+        <UseCaseExamples />
+        <PilotContract />
+        <ConversionHandoff />
+      </main>
       <footer className="site-footer">
-        <a className="wordmark wordmark--dark" href="#top" aria-label="Relay Studio, início">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="brand/relay-icon-dark.svg" alt="" width="28" height="28" />
-          <span>Relay Studio</span>
-        </a>
-        <p>Trabalhar na coisa certa.</p>
-        <span>© {new Date().getFullYear()} Relay Studio</span>
+        <p className="site-footer__tagline"><RevealWords text={footer.tagline} /></p>
+        <div className="site-footer__meta">
+          <a className="wordmark" href="#top" aria-label="Relay Studio, início">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="brand/relay-icon-dark.svg" alt="" width="28" height="28" />
+            <span>Relay Studio</span>
+          </a>
+          <span>© {new Date().getFullYear()} Relay Studio</span>
+        </div>
       </footer>
-    </main>
+    </MotionRoot>
   );
 }

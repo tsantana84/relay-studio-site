@@ -10,19 +10,21 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const vinextBin = path.join(projectRoot, "node_modules", ".bin", "vinext");
 const port = 3107;
 
-function assertOperationalStory(html) {
-  const list = html.match(/<ol class="operational-story__chapters"[\s\S]*?<\/ol>/)?.[0] ?? "";
+function assertStory(html) {
+  const list = html.match(/<ol class="how__steps"[\s\S]*?<\/ol>/)?.[0] ?? "";
   let cursor = -1;
-  for (const stage of ["source", "preparation", "approval", "execution", "result"]) {
-    const next = list.indexOf(`data-stage="${stage}"`);
-    assert.ok(next > cursor, `${stage} deve vir depois do estágio anterior na lista semântica`);
+  for (const title of [
+    "Você escolhe um trabalho",
+    "A Relay prepara e confere",
+    "Sua equipe decide as exceções",
+    "A Relay executa e registra",
+  ]) {
+    const next = list.indexOf(title);
+    assert.ok(next > cursor, `"${title}" deve vir depois do passo anterior na lista semântica`);
     cursor = next;
   }
   assert.match(html, /Do trabalho manual ao resultado entregue\./);
-  assert.match(html, /A Relay executa\. Sua equipe decide o que exige julgamento\./);
-  for (const label of ["preparado", "exceção", "aprovado", "devolvido"]) {
-    assert.match(html, new RegExp(`operational-rail__branch[^>]*>${label}`));
-  }
+  assert.match(html, /A Relay executa\. Sua equipe decide\./);
 }
 
 async function waitForServer(url, timeoutMs = 15_000) {
@@ -50,12 +52,11 @@ test("home renderiza a presença institucional completa", async () => {
     const html = await response.text();
 
     assert.match(html, /<html lang="pt-BR">/);
-    assert.match(html, /<title>Relay Studio — execução operacional<\/title>/);
+    assert.match(html, /<title>Relay Studio — menos trabalho repetitivo, mais decisão<\/title>/);
     assert.match(
       html,
-      /<meta name="description" content="A Relay executa trabalhos operacionais recorrentes, leva exceções para decisão da equipe e registra o resultado\."\/>/,
+      /<meta name="description" content="A Relay faz o trabalho repetitivo da sua operação, para nas exceções para a sua equipe decidir e registra tudo\."\/>/,
     );
-    assert.match(html, /Relay Studio/);
     const sections = ["top", "como-funciona", "onde-comecar", "piloto", "contato"];
     let previous = -1;
     for (const section of sections) {
@@ -64,45 +65,41 @@ test("home renderiza a presença institucional completa", async () => {
       previous = position;
     }
 
-    assert.match(html, /Reduza o custo do trabalho recorrente sem perder o controle\./);
+    assert.match(html, /<h1[^>]*aria-label="Menos conferir, copiar e cobrar\. Mais tempo para decidir\."/);
     assert.match(html, /Primeiros pilotos em validação/);
-    for (const title of [
-      "Escolha um trabalho recorrente",
-      "A Relay prepara o trabalho",
-      "As exceções chegam à sua equipe",
-      "Só o que foi autorizado é executado",
-      "Você recebe o resultado e o registro",
+    assert.match(html, /<noscript><style>\[data-motion\]/);
+    // O exemplo chega legível no HTML estático, identificado como ilustração.
+    assert.match(html, /Exemplo ilustrativo/);
+    for (const step of [
+      "Reunir pedidos e repasses",
+      "Conferir um por um",
+      "Parar no que não bate",
+      "Executar só o que foi aprovado",
+      "Registrar o que aconteceu",
     ]) {
-      assert.match(html, new RegExp(title));
+      assert.match(html, new RegExp(step));
     }
-    for (const example of [
-      "Conferir valores entre fontes",
-      "Preparar relatórios recorrentes",
-      "Acompanhar prazos e pendências",
-      "Atualizar sistemas depois de uma decisão",
-    ]) {
+    for (const row of ["Procurar números em planilhas", "Decidir onde intervir", "Copiar dados entre sistemas"]) {
+      assert.match(html, new RegExp(row));
+    }
+    for (const example of ["Conferir valores", "Fechar relatórios", "Cobrar prazos e pendências", "Atualizar sistemas"]) {
       assert.match(html, new RegExp(example));
     }
-    assert.match(
-      html,
-      /Estes são exemplos de trabalhos que podemos avaliar para um piloto\. Não são soluções prontas nem resultados comprovados de clientes\./,
-    );
-    assert.match(html, /Comece por um trabalho\. Prove o valor antes de ampliar\./);
-    for (const step of ["Escolher", "Combinar", "Testar", "Decidir"]) {
+    assert.match(html, /Não são soluções prontas nem resultados comprovados de clientes\./);
+    assert.match(html, /Comece por um trabalho só\. Amplie se valer a pena\./);
+    for (const step of ["Escolher", "Combinar", "Rodar", "Decidir"]) {
       assert.match(html, new RegExp(`>${step}<`));
     }
-    assert.match(html, /Tem um trabalho repetitivo tomando o tempo da sua equipe\?/);
+    assert.match(html, /Frequência, prazo, critério de aceite e preço são definidos na avaliação do piloto\./);
+    assert.match(html, /Qual trabalho se repete na sua operação\?/);
     const contact = html.slice(html.indexOf('id="contato"'), html.indexOf("</section>", html.indexOf('id="contato"')));
     assert.match(contact, /href="https:\/\/docs\.google\.com\/forms\/d\/e\//);
     assert.match(contact, /target="_blank"/);
     assert.match(contact, /rel="noreferrer"/);
     assert.match(contact, /Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real\./);
     assert.match(contact, /O formulário abre no Google Forms\./);
-    assert.doesNotMatch(html, /id="audit"/);
-    assert.doesNotMatch(html, /Forte candidato|Vale investigar|Ainda não é prioridade/);
-    assertOperationalStory(html);
-    assert.match(html, /Frequência, prazo, critério de aceite e preço são definidos durante a avaliação do piloto\./);
-    for (const forbidden of ["184 pedidos", "179 correspondências", "recibo sintético #014", "Prévia local", "Prévia sem envio", "<form", 'id="formulario"']) {
+    assertStory(html);
+    for (const forbidden of ["184 pedidos", "179 correspondências", "recibo sintético #014", "<form", 'id="audit"']) {
       assert.doesNotMatch(html, new RegExp(forbidden));
     }
     assert.doesNotMatch(html, /localhost:3000/);
@@ -134,5 +131,5 @@ test("o build produz uma saída estática para o GitHub Pages", async () => {
   assert.match(staticHtml, /_next\/static/);
   assert.match(staticHtml, /brand\/relay-icon-light\.svg/);
   assert.match(staticHtml, /https:\/\/docs\.google\.com\/forms\/d\/e\//);
-  assertOperationalStory(staticHtml);
+  assertStory(staticHtml);
 });
