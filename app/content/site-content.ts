@@ -1,116 +1,196 @@
 export const FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSfype2A6Klr6f7cwxLnZY8Hr9BxfRAZT5suJLXASKsf8dsWIw/viewform";
 
-export const operationalStory = {
-  hero: {
-    kicker: "SOFTWARE PARA EXECUÇÃO OPERACIONAL",
-    title: "Reduza o custo do trabalho recorrente sem perder o controle.",
-    status: "Primeiros pilotos em validação",
-    lede: "A Relay executa etapas manuais e repetitivas, leva as exceções para sua equipe decidir e registra o resultado.",
-    primaryCta: "Mostrar um trabalho recorrente",
-    secondaryCta: "Entender como funciona",
-  },
-  title: "Do trabalho manual ao resultado entregue.",
-  chapters: [
-    {
-      stage: "source",
-      index: "01",
-      verb: "Escolher",
-      title: "Escolha um trabalho recorrente",
-      detail: "Começamos por uma tarefa manual, frequente e com resultado verificável.",
-    },
-    {
-      stage: "preparation",
-      index: "02",
-      verb: "Preparar",
-      title: "A Relay prepara o trabalho",
-      detail: "Reúne informações de fontes autorizadas e aplica as regras combinadas.",
-    },
-    {
-      stage: "approval",
-      index: "03",
-      verb: "Decidir",
-      title: "As exceções chegam à sua equipe",
-      detail: "O que exige julgamento humano para. A pessoa responsável decide como seguir.",
-    },
-    {
-      stage: "execution",
-      index: "04",
-      verb: "Executar",
-      title: "Só o que foi autorizado é executado",
-      detail: "A Relay conclui as etapas aprovadas e mantém o restante pendente.",
-    },
-    {
-      stage: "result",
-      index: "05",
-      verb: "Registrar",
-      title: "Você recebe o resultado e o registro",
-      detail: "Fica claro o que foi concluído, o que continua pendente e quais decisões foram tomadas.",
-    },
-  ],
-  railStates: {
-    preparation: { prepared: "preparado", exception: "exceção" },
-    approval: { approved: "aprovado", returned: "devolvido" },
-  },
-  impact: "A Relay executa. Sua equipe decide o que exige julgamento.",
+export const siteMeta = {
+  title: "Relay Studio — menos trabalho repetitivo, mais decisão",
+  description:
+    "A Relay faz o trabalho repetitivo da sua operação, para nas exceções para a sua equipe decidir e registra tudo.",
 } as const;
 
 export const siteNavigation = {
   items: [
     { label: "Como funciona", href: "#como-funciona" },
-    { label: "Onde começar", href: "#onde-comecar" },
+    { label: "Exemplos", href: "#onde-comecar" },
     { label: "Piloto", href: "#piloto" },
   ],
-  action: { label: operationalStory.hero.primaryCta, href: "#contato" },
+  action: { label: "Avaliar um piloto", href: "#contato" },
+} as const;
+
+export const hero = {
+  status: "Primeiros pilotos em validação",
+  titleText: "Menos conferir, copiar e cobrar. Mais tempo para decidir.",
+  // Cada palavra é animada separadamente; `tone` marca o que sai e o que fica.
+  title: [
+    [
+      { text: "Menos" },
+      { text: "conferir", tail: ",", tone: "less" },
+      { text: "copiar", tone: "less" },
+      { text: "e" },
+      { text: "cobrar", tail: ".", tone: "less" },
+    ],
+    [
+      { text: "Mais" },
+      { text: "tempo" },
+      { text: "para" },
+      { text: "decidir", tail: ".", tone: "more" },
+    ],
+  ],
+  lede: "A Relay faz o trabalho repetitivo da sua operação: reúne os dados, confere, prepara e atualiza. Quando algo foge da regra, ela para e espera a sua equipe decidir. Tudo fica registrado.",
+  primaryCta: siteNavigation.action.label,
+  secondaryCta: "Ver como funciona",
+} as const;
+
+export const runDemo = {
+  tag: "Exemplo ilustrativo",
+  title: "Conferência de repasses",
+  cadence: "Toda segunda-feira",
+  steps: [
+    {
+      label: "Reunir pedidos e repasses",
+      running: "Lendo as fontes autorizadas",
+      done: "Fontes autorizadas lidas",
+    },
+    {
+      label: "Conferir um por um",
+      running: "Aplicando as regras combinadas",
+      done: "Regras combinadas aplicadas",
+    },
+    {
+      label: "Parar no que não bate",
+      running: "Esperando a sua decisão",
+      approved: "Aprovado por você",
+      returned: "Devolvido por você",
+    },
+    {
+      label: "Executar só o que foi aprovado",
+      running: "Executando",
+      done: "Ajuste lançado",
+      skipped: "Nada foi executado nesse repasse",
+    },
+    {
+      label: "Registrar o que aconteceu",
+      running: "Registrando",
+      approved: "Registrado: o que foi feito e quem aprovou",
+      returned: "Registrado: o que ficou pendente e por quê",
+    },
+  ],
+  exception: {
+    title: "Um repasse veio menor que o pedido.",
+    body: "A Relay não segue sozinha. A decisão é sua.",
+    approve: "Aprovar ajuste",
+    return: "Devolver",
+  },
+  status: [
+    "Pronto para começar",
+    "Reunindo as informações",
+    "Conferindo",
+    "Parou. Esperando a sua decisão",
+    "Executando",
+    "Registrando",
+    "Concluído",
+  ],
+  replay: "Rodar de novo",
+} as const;
+
+export const swap = {
+  eyebrow: "A troca",
+  title: "Tire o repetitivo da frente. Fique com o que pede julgamento.",
+  body: "Ninguém entrou na sua equipe para copiar dado de um sistema para outro. Esse trabalho precisa ser feito, mas não precisa ser feito por ela.",
+  fromLabel: "Sai da rotina da equipe",
+  toLabel: "Fica com a equipe",
+  rows: [
+    { from: "Procurar números em planilhas", to: "Decidir onde intervir" },
+    { from: "Montar o mesmo relatório toda semana", to: "Discutir o resultado" },
+    { from: "Conferir documento por documento", to: "Resolver as exceções" },
+    { from: "Cobrar atualização de status", to: "Destravar o que parou" },
+    { from: "Copiar dados entre sistemas", to: "Decidir com tudo na mão" },
+  ],
+} as const;
+
+export const howItWorks = {
+  eyebrow: "Como funciona",
+  title: "Do trabalho manual ao resultado entregue.",
+  body: "Quatro passos. Em dois deles quem manda é a sua equipe.",
+  steps: [
+    {
+      index: "01",
+      owner: "Você",
+      title: "Você escolhe um trabalho",
+      detail: "Um só. Que se repete, toma tempo e tem um resultado que dá para conferir.",
+    },
+    {
+      index: "02",
+      owner: "Relay",
+      title: "A Relay prepara e confere",
+      detail: "Reúne as informações das fontes que você autorizou e aplica as regras combinadas com a sua equipe.",
+    },
+    {
+      index: "03",
+      owner: "Sua equipe",
+      title: "Sua equipe decide as exceções",
+      detail: "O que foge da regra não segue sozinho. Para, chega à pessoa responsável e espera a decisão.",
+    },
+    {
+      index: "04",
+      owner: "Relay",
+      title: "A Relay executa e registra",
+      detail: "Só o que foi aprovado é executado. No fim, você vê o que foi feito, o que ficou pendente e quem decidiu o quê.",
+    },
+  ],
+  impact: "A Relay executa. Sua equipe decide.",
 } as const;
 
 export const useCaseExamples = {
-  title: "Que trabalho está consumindo tempo demais?",
-  intro: "Alguns exemplos que podemos avaliar com você:",
+  eyebrow: "Exemplos",
+  title: "Que trabalho toma tempo demais da sua equipe?",
+  intro: "Alguns trabalhos que avaliamos para um primeiro piloto:",
   items: [
     {
-      title: "Conferir valores entre fontes",
-      body: "Comparar pedidos, pagamentos, repasses ou cobranças e separar o que precisa de atenção.",
+      title: "Conferir valores",
+      body: "Pedidos, pagamentos, repasses e cobranças comparados entre fontes. Sua equipe só olha o que não bate.",
     },
     {
-      title: "Preparar relatórios recorrentes",
-      body: "Reunir informações, aplicar regras combinadas e deixar o resultado pronto para revisão.",
+      title: "Fechar relatórios",
+      body: "As mesmas informações, das mesmas fontes, toda semana ou todo mês. Prontas para revisão.",
     },
     {
-      title: "Acompanhar prazos e pendências",
-      body: "Identificar o que está atrasado, avisar as pessoas responsáveis e manter o acompanhamento organizado.",
+      title: "Cobrar prazos e pendências",
+      body: "O que atrasou, quem precisa saber e o que já foi resolvido, sem ninguém correndo atrás.",
     },
     {
-      title: "Atualizar sistemas depois de uma decisão",
-      body: "Executar as etapas aprovadas e registrar o que foi feito e o que continua pendente.",
+      title: "Atualizar sistemas",
+      body: "Depois da decisão, as etapas aprovadas são executadas e o que foi feito fica registrado.",
     },
   ],
-  boundary: "Estes são exemplos de trabalhos que podemos avaliar para um piloto. Não são soluções prontas nem resultados comprovados de clientes.",
+  boundary: "São exemplos do que avaliamos para um piloto. Não são soluções prontas nem resultados comprovados de clientes.",
 } as const;
 
 export const pilotContract = {
-  title: "Comece por um trabalho. Prove o valor antes de ampliar.",
-  body: "Escolhemos com você uma tarefa recorrente, o resultado esperado e os limites da Relay. Rodamos um primeiro ciclo controlado e comparamos o tempo, o custo e a qualidade com a forma atual de trabalhar.",
+  eyebrow: "Piloto",
+  title: "Comece por um trabalho só. Amplie se valer a pena.",
+  body: "Escolhemos com você um trabalho, o resultado esperado e os limites da Relay. Rodamos um ciclo acompanhado e comparamos o tempo, o custo e a qualidade com o jeito atual de trabalhar.",
   steps: [
-    { index: "01", title: "Escolher", body: "Um trabalho frequente e verificável." },
+    { index: "01", title: "Escolher", body: "Um trabalho frequente, com resultado que dá para conferir." },
     { index: "02", title: "Combinar", body: "Fontes, regras, responsáveis e limites." },
-    { index: "03", title: "Testar", body: "Executar um ciclo com acompanhamento." },
-    { index: "04", title: "Decidir", body: "Continuar, ajustar ou parar com base no resultado." },
+    { index: "03", title: "Rodar", body: "Um ciclo completo, com acompanhamento." },
+    { index: "04", title: "Decidir", body: "Continuar, ajustar ou parar, com o resultado na mão." },
   ],
-  maturity: "Frequência, prazo, critério de aceite e preço são definidos durante a avaliação do piloto.",
+  maturity: "Frequência, prazo, critério de aceite e preço são definidos na avaliação do piloto.",
 } as const;
 
-export const siteContent = {
-  cta: {
-    title: "Tem um trabalho repetitivo tomando o tempo da sua equipe?",
-    body: "Conte pra gente o que vocês repetem toda semana ou todo mês. Vamos avaliar se isso pode virar um primeiro piloto.",
-    prompts: [
-      "Qual trabalho se repete",
-      "Com que frequência acontece",
-      "Onde ele consome tempo ou dinheiro",
-    ],
-    action: "Contar como funciona",
-    safety: "Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real.",
-    externalNote: "O formulário abre no Google Forms.",
-  },
+export const contact = {
+  title: "Qual trabalho se repete na sua operação?",
+  body: "Conte em três respostas. A gente lê, avalia se dá um primeiro piloto e responde.",
+  prompts: [
+    "Qual trabalho se repete",
+    "Com que frequência acontece",
+    "Onde ele pesa: tempo, erro ou dinheiro",
+  ],
+  action: "Descrever um trabalho",
+  safety: "Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real.",
+  externalNote: "O formulário abre no Google Forms.",
+} as const;
+
+export const footer = {
+  tagline: "Trabalhar na coisa certa.",
 } as const;

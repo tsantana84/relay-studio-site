@@ -2,149 +2,96 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 
-const source = await readFile(new URL("../app/content/site-content.ts", import.meta.url), "utf8");
-const formBrief = await readFile(new URL("../docs/site-form-brief.md", import.meta.url), "utf8");
-const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
-const pageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-const conversionSource = await readFile(
-  new URL("../app/components/conversion-handoff.tsx", import.meta.url),
-  "utf8",
-).catch(() => "");
-const heroSource = await readFile(new URL("../app/components/operational-hero.tsx", import.meta.url), "utf8");
-const storySource = await readFile(new URL("../app/components/operational-story.tsx", import.meta.url), "utf8");
-const railSource = await readFile(new URL("../app/components/operational-rail.tsx", import.meta.url), "utf8");
-const useCasesSource = await readFile(
-  new URL("../app/components/use-case-examples.tsx", import.meta.url),
-  "utf8",
-).catch(() => "");
-const manifestoSource = await readFile(new URL("../app/components/manifesto-cut.tsx", import.meta.url), "utf8");
-const layoutSource = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
-const fontsCss = await readFile(new URL("../public/fonts/fonts.css", import.meta.url), "utf8");
-const motion = await readFile(new URL("../app/components/operational-story-motion.tsx", import.meta.url), "utf8");
+const read = (file) => readFile(new URL(`../${file}`, import.meta.url), "utf8");
 
-test("a história explica cinco etapas sem métricas inventadas", () => {
-  const stages = ["source", "preparation", "approval", "execution", "result"];
-  let cursor = -1;
-  for (const stage of stages) {
-    const next = source.indexOf(`stage: "${stage}"`);
-    assert.ok(next > cursor, `${stage} deve vir depois do estágio anterior`);
-    cursor = next;
+const source = await read("app/content/site-content.ts");
+const formBrief = await read("docs/site-form-brief.md");
+const css = await read("app/globals.css");
+const pageSource = await read("app/page.tsx");
+const layoutSource = await read("app/layout.tsx");
+const fontsCss = await read("public/fonts/fonts.css");
+const headerSource = await read("app/components/site-header.tsx");
+const heroSource = await read("app/components/hero.tsx");
+const conversionSource = await read("app/components/conversion-handoff.tsx");
+const demoSource = await read("app/components/run-demo.tsx");
+const howSource = await read("app/components/how-it-works.tsx");
+const marqueeSource = await read("app/components/marquee.tsx");
+const motionKit = await read("app/components/motion-kit.tsx");
+
+test("a abertura fala do benefício e mantém a maturidade junto da promessa", () => {
+  assert.match(source, /titleText: "Menos conferir, copiar e cobrar\. Mais tempo para decidir\."/);
+  assert.match(source, /status: "Primeiros pilotos em validação"/);
+  assert.match(source, /ela para e espera a sua equipe decidir/);
+  assert.match(heroSource, /hero\.status/);
+  assert.match(heroSource, /hero\.lede/);
+});
+
+test("a copy não promete o que a evidência não sustenta", () => {
+  assert.doesNotMatch(source, /garantimos|autônom[oa]|qualquer empresa|em produção|mágica|substitui|zero humanos|sem risco/i);
+  assert.doesNotMatch(source, /Relay (OS|Web|Sim)/);
+  // Nada de quantidades, percentuais ou resultados de clientes inventados.
+  assert.doesNotMatch(source, /\d+\s?%|R\$|\d+ (pedidos|repasses|clientes|horas)/);
+});
+
+test("o exemplo interativo é identificado como ilustração e para na exceção", () => {
+  assert.match(source, /tag: "Exemplo ilustrativo"/);
+  assert.match(source, /A Relay não segue sozinha\. A decisão é sua\./);
+  for (const label of ["Aprovar ajuste", "Devolver", "Nada foi executado nesse repasse"]) {
+    assert.match(source, new RegExp(label));
   }
-  for (const copy of [
-    "Escolha um trabalho recorrente",
-    "A Relay prepara o trabalho",
-    "As exceções chegam à sua equipe",
-    "Só o que foi autorizado é executado",
-    "Você recebe o resultado e o registro",
+  // A execução só avança além da exceção por uma decisão da pessoa.
+  assert.doesNotMatch(demoSource, /PHASE_DURATION[^;]*\b3:/);
+  assert.match(demoSource, /onClick=\{\(\) => decide\("approved"\)\}/);
+  assert.match(demoSource, /onClick=\{\(\) => decide\("returned"\)\}/);
+  assert.match(demoSource, /aria-live="polite"/);
+});
+
+test("a história explica quatro passos e quem responde por cada um", () => {
+  for (const title of [
+    "Você escolhe um trabalho",
+    "A Relay prepara e confere",
+    "Sua equipe decide as exceções",
+    "A Relay executa e registra",
   ]) {
-    assert.match(source, new RegExp(copy));
+    assert.match(source, new RegExp(title));
   }
-  assert.match(source, /A Relay executa\. Sua equipe decide o que exige julgamento\./);
-  assert.doesNotMatch(source, /184 pedidos|179 correspondências|3 aprovados|182 encerrados|recibo sintético #014/);
-  assert.match(storySource, /<ol[^>]*className="operational-story__chapters"/);
+  assert.match(source, /impact: "A Relay executa\. Sua equipe decide\."/);
+  assert.match(howSource, /<ol className="how__steps">/);
+});
+
+test("os exemplos aparecem com limite de evidência", () => {
+  for (const example of ["Conferir valores", "Fechar relatórios", "Cobrar prazos e pendências", "Atualizar sistemas"]) {
+    assert.match(source, new RegExp(example));
+  }
+  assert.match(source, /Não são soluções prontas nem resultados comprovados de clientes/);
 });
 
 test("o piloto mede valor antes de ampliar", () => {
-  for (const step of ["Escolher", "Combinar", "Testar", "Decidir"]) {
+  for (const step of ["Escolher", "Combinar", "Rodar", "Decidir"]) {
     assert.match(source, new RegExp(`title: "${step}"`));
   }
   assert.match(source, /comparamos o tempo, o custo e a qualidade/);
-  assert.match(source, /Frequência, prazo, critério de aceite e preço são definidos durante a avaliação do piloto/);
-  assert.doesNotMatch(source, /SLA, critério de aceite e cobrança continuam em validação/);
+  assert.match(source, /Frequência, prazo, critério de aceite e preço são definidos na avaliação do piloto/);
 });
 
 test("a conversão mostra três perguntas e abre diretamente o formulário real", () => {
-  for (const prompt of [
-    "Qual trabalho se repete",
-    "Com que frequência acontece",
-    "Onde ele consome tempo ou dinheiro",
-  ]) {
+  for (const prompt of ["Qual trabalho se repete", "Com que frequência acontece", "Onde ele pesa"]) {
     assert.match(source, new RegExp(prompt));
   }
+  assert.match(source, /Não envie dados pessoais sensíveis, credenciais, documentos, planilhas nem conteúdo operacional real\./);
   assert.match(conversionSource, /href={FORM_URL}/);
   assert.match(conversionSource, /target="_blank"/);
   assert.match(conversionSource, /rel="noreferrer"/);
   assert.match(pageSource, /<ConversionHandoff \/>/);
-  assert.doesNotMatch(pageSource, /FlowFormPreview/);
-  assert.doesNotMatch(source, /Prévia local|Prévia sem envio|fields:/);
-});
-
-test("o sistema visual usa fontes locais e cores semânticas", () => {
-  assert.match(layoutSource, /rel="preload"/);
-  assert.match(layoutSource, /fonts\/anybody-latin-wdth-normal\.woff2/);
-  assert.match(layoutSource, /fonts\/fonts\.css/);
-  assert.match(fontsCss, /@font-face[\s\S]*?Anybody Variable/);
-  assert.match(fontsCss, /@font-face[\s\S]*?Geologica Variable/);
-  for (const token of ["--relay-action", "--relay-exception", "--relay-decision", "--relay-paper"]) {
-    assert.match(css, new RegExp(token));
-  }
-});
-
-test("copy abre com benefício econômico, categoria e controle humano", () => {
-  assert.match(source, /SOFTWARE PARA EXECUÇÃO OPERACIONAL/);
-  assert.match(source, /Reduza o custo do trabalho recorrente sem perder o controle\./);
-  assert.match(source, /A Relay executa etapas manuais e repetitivas/);
-  assert.match(source, /leva as exceções para sua equipe decidir/);
-  assert.match(source, /Mostrar um trabalho recorrente/);
-  assert.match(source, /Entender como funciona/);
-  assert.doesNotMatch(source, /garantimos|autônom[oa]|qualquer empresa|em produção/i);
-});
-
-test("o hero mantém a maturidade junto da promessa", () => {
-  assert.match(source, /status: "Primeiros pilotos em validação"/);
-  assert.match(heroSource, /operationalStory\.hero\.status/);
 });
 
 test("a navegação nomeia as seções e leva a ação principal ao contato", () => {
-  const navigation = [
-    ["Como funciona", "#como-funciona"],
-    ["Onde começar", "#onde-comecar"],
-    ["Piloto", "#piloto"],
-  ];
-  for (const [label, href] of navigation) {
+  for (const [label, href] of [["Como funciona", "#como-funciona"], ["Exemplos", "#onde-comecar"], ["Piloto", "#piloto"]]) {
     assert.match(source, new RegExp(`label: "${label}", href: "${href}"`));
   }
-  assert.match(source, /action: \{ label: operationalStory\.hero\.primaryCta, href: "#contato" \}/);
-  assert.match(heroSource, /siteNavigation/);
-  assert.match(heroSource, /siteNavigation\.items\.map/);
-  assert.match(heroSource, /siteNavigation\.action\.href/);
-  assert.match(heroSource, /siteNavigation\.action\.label/);
-  assert.doesNotMatch(heroSource, /Como funciona|Onde começar|Piloto|Mostrar um trabalho recorrente/);
-  assert.match(heroSource, /href="#como-funciona"/);
-  assert.doesNotMatch(heroSource, /href="#prova"|href="#limites"/);
-});
-
-test("o manifesto move conteúdo interno sem deslocar sua caixa", () => {
-  assert.match(manifestoSource, /className="manifesto-cut__text"/);
-  const enhancedCss = css.slice(css.indexOf("@media (min-width: 769px) and (prefers-reduced-motion: no-preference)"));
-  assert.doesNotMatch(enhancedCss, /\.manifesto-cut\s*{[^}]*transform:/);
-  assert.match(enhancedCss, /\.manifesto-cut__text\s*{[^}]*transform:/);
-});
-
-test("o trilho recebe estados explícitos em vez de extrair números da copy", () => {
-  for (const label of ["preparado", "exceção", "aprovado", "devolvido"]) {
-    assert.match(source, new RegExp(label));
-  }
-  assert.match(railSource, /railStates\.preparation\.prepared/);
-  assert.match(railSource, /railStates\.preparation\.exception/);
-  assert.match(railSource, /railStates\.approval\.approved/);
-  assert.match(railSource, /railStates\.approval\.returned/);
-  assert.doesNotMatch(railSource, /split\(" · "\)|receipt/);
-});
-
-test("os exemplos são concretos e aparecem com limite de evidência", () => {
-  for (const example of [
-    "Conferir valores entre fontes",
-    "Preparar relatórios recorrentes",
-    "Acompanhar prazos e pendências",
-    "Atualizar sistemas depois de uma decisão",
-  ]) {
-    assert.match(source, new RegExp(example));
-  }
-  assert.match(source, /podemos avaliar para um piloto/);
-  assert.match(source, /Não são soluções prontas nem resultados comprovados de clientes/);
-  assert.match(pageSource, /<UseCaseExamples \/>/);
-  assert.match(useCasesSource, /aria-labelledby="use-cases-title"/);
+  assert.match(source, /action: \{ label: "Avaliar um piloto", href: "#contato" \}/);
+  assert.match(headerSource, /siteNavigation\.items\.map/);
+  assert.match(headerSource, /siteNavigation\.action\.href/);
 });
 
 test("formulário externo mantém o contrato de qualificação e segurança", () => {
@@ -156,80 +103,43 @@ test("formulário externo mantém o contrato de qualificação e segurança", ()
   assert.doesNotMatch(formBrief, /anexar|upload|senha|token/i);
 });
 
-test("sistema visual reserva cor para ação, exceção e evidência", () => {
-  assert.match(css, /--relay-action\s*:/);
-  assert.match(css, /--relay-decision\s*:/);
-  assert.match(css, /\.operational-chapter\[data-stage="approval"\]/);
-  assert.match(css, /\.operational-chapter\[data-stage="result"\]/);
-  assert.match(css, /@media \(max-width: 620px\)/);
-  assert.match(css, /:focus-visible/);
+test("o sistema visual usa fontes locais e a paleta da marca", () => {
+  assert.match(layoutSource, /fonts\/anybody-latin-wdth-normal\.woff2/);
+  assert.match(layoutSource, /fonts\/fonts\.css/);
+  assert.match(fontsCss, /@font-face[\s\S]*?Anybody Variable/);
+  assert.match(fontsCss, /@font-face[\s\S]*?Geologica Variable/);
+  for (const [token, value] of [
+    ["--relay-navy", "#061321"],
+    ["--relay-paper", "#f7f2e7"],
+    ["--relay-action", "#ffb000"],
+    ["--relay-exception", "#f2442c"],
+    ["--relay-decision", "#dfff45"],
+  ]) {
+    assert.match(css, new RegExp(`${token}:\\s*${value}`));
+  }
+  assert.doesNotMatch(css, /backdrop-filter|border-radius/);
 });
 
-test("tipografia e texto editorial preservam legibilidade na superfície de papel", () => {
-  const heroHeading = css.match(/\.operational-hero h1\s*{([^}]*)}/)?.[1] ?? "";
-  assert.match(heroHeading, /font-size:\s*clamp\(/);
-  assert.match(heroHeading, /line-height:\s*\.82/);
-  assert.match(css, /--relay-font-body:\s*"Geologica Variable"/);
-  assert.match(css, /@media \(max-width: 768px\)[\s\S]*?\.operational-story__stage\s*{[^}]*position:\s*static/);
-  assert.match(css, /\.operational-story__chapters\s*{[^}]*list-style:\s*none/);
-  assert.match(css, /\.operational-chapter\s*{[^}]*min-height:\s*72vh/);
-});
-
-test("headings e hero usam a largura editorial e o espaçamento aprovados", () => {
-  const headingRule = css.match(/h1, h2, h3, \.manifesto-cut\s*{([^}]*)}/)?.[1] ?? "";
-  const heroHeading = css.match(/\.operational-hero h1\s*{([^}]*)}/)?.[1] ?? "";
-
-  assert.match(headingRule, /font-variation-settings:\s*"wdth" 78,\s*"wght" 820/);
-  assert.match(headingRule, /letter-spacing:\s*-\.035em/);
-  assert.match(heroHeading, /letter-spacing:\s*-\.04em/);
-});
-
-test("o contrato e o sistema respeitam os limites visuais e movimento reduzido", () => {
-  assert.doesNotMatch(css, /border-left:\s*4px solid var\(--relay-exception\)/);
-  assert.match(css, /\.operational-chapter\[data-stage="approval"\]\s*{[^}]*color:/);
-  assert.doesNotMatch(css, /\.pilot-contract__limits/);
+test("o conteúdo continua legível sem JavaScript e com movimento reduzido", async () => {
+  assert.match(layoutSource, /<noscript>[\s\S]*\[data-motion\]\{opacity:1!important;transform:none!important\}/);
+  // Todo componente que nasce escondido precisa do marcador que o <noscript> desfaz.
+  for (const file of ["motion-kit.tsx", "hero-headline.tsx", "swap-list.tsx", "pilot-contract.tsx"]) {
+    assert.match(await read(`app/components/${file}`), /data-motion/, file);
+  }
+  assert.match(motionKit, /<MotionConfig reducedMotion="user">/);
+  assert.match(pageSource, /<MotionRoot>/);
+  assert.match(marqueeSource, /if \(reduced\) return/);
+  assert.match(howSource, /data-live/);
+  assert.match(css, /\.how\[data-live="true"\] \.how__step\[data-reached="false"\]/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?scroll-behavior:\s*auto/);
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?transition-duration:\s*0\.01ms/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?animation-duration:\s*0\.01ms/);
 });
 
-test("a experiência final preserva semântica, foco e fallbacks responsivos", () => {
-  assert.match(storySource, /aria-labelledby="story-title"/);
-  assert.match(storySource, /aria-hidden="true"/);
+test("foco visível e breakpoints móveis estão definidos", () => {
   assert.match(css, /:focus-visible/);
-  assert.match(css, /@media \(max-width:\s*768px\)/);
-  assert.match(css, /@media \(max-width:\s*420px\)/);
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
-});
-
-test("o breakpoint compacto mantém texto e alvos interativos dentro do viewport", () => {
-  assert.match(css, /\.contact h2\s*{[^}]*max-width:\s*10ch[^}]*font-size:\s*clamp\(2\.5rem,\s*5vw,\s*5\.5rem\)[^}]*overflow-wrap:\s*normal/);
-  const compactCss = css.slice(css.indexOf("@media (max-width: 420px)"));
-  assert.match(compactCss, /\.site-nav a[^}]*min-width:\s*44px/);
-  assert.match(compactCss, /\.conversion-handoff \.button/);
-  const mobileStart = css.indexOf("@media (max-width: 620px)");
-  const mobileEnd = css.indexOf("@media (max-width: 420px)");
-  const mobileCss = css.slice(mobileStart, mobileEnd);
-  assert.match(mobileCss, /\.pilot-contract__steps h3\s*{[^}]*max-width:\s*14ch[^}]*font-variation-settings:\s*"wdth" 90[^}]*line-height:\s*1\.05/);
-});
-
-test("o controlador suspende trabalho e preserva fallback", () => {
-  assert.match(motion, /if \(!\("IntersectionObserver" in window\)\) return/);
-  assert.match(motion, /if \(!visible \|\| reduced\.matches \|\| frame\) return/);
-  assert.match(motion, /cancelAnimationFrame/);
-  assert.match(motion, /document\.fonts\.ready/);
-  assert.match(motion, /data-active-stage|activeStage/);
-  assert.match(motion, /removeProperty\("--story-progress"\)/);
-  assert.match(css, /@media \(min-width: 769px\) and \(prefers-reduced-motion: no-preference\)/);
-  assert.doesNotMatch(css, /cubic-bezier\([^)]*1\.5/);
-});
-
-test("a abertura não cria overflow horizontal no viewport mobile", () => {
-  const mobileStart = css.indexOf("@media (max-width: 620px)");
-  const mobileEnd = css.indexOf("@media (max-width: 420px)");
-  const mobileCss = css.slice(mobileStart, mobileEnd);
-  assert.match(mobileCss, /\.operational-hero__topline\s*{[^}]*flex-wrap:\s*wrap/);
-  assert.match(mobileCss, /\.site-nav\s*{[^}]*width:\s*100%[^}]*justify-content:\s*flex-start/);
-  assert.match(mobileCss, /\.operational-hero__content\s*{[^}]*width:\s*100%[^}]*max-width:\s*100%/);
-  assert.match(mobileCss, /\.operational-hero h1\s*{[^}]*overflow-wrap:\s*break-word/);
-  assert.match(mobileCss, /\.operational-hero__lede\s*{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*break-word/);
+  assert.match(css, /@media \(max-width: 960px\)/);
+  assert.match(css, /@media \(max-width: 720px\)/);
+  assert.match(css, /@media \(max-width: 420px\)/);
+  assert.match(css, /main\s*{[^}]*overflow-x:\s*clip/);
+  assert.match(css, /\.run__choice\s*{[^}]*min-height:\s*44px/);
 });
